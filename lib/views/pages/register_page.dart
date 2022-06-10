@@ -40,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: IconButton(
                   onPressed: () {
+                    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
                     context.read<RoutesCubit>().emit(RoutesLoginScreen());
                   },
                   icon: const Icon(
@@ -324,7 +325,10 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           CustomButton(
             title: "Register",
-            onTap: () {},
+            onTap: () {
+              // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+              context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+            },
           ),
           const SizedBox(
             height: 20,
@@ -343,6 +347,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               GestureDetector(
                 onTap: () {
+                  // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
                   context.read<RoutesCubit>().emit(RoutesLoginScreen());
                 },
                 child: Text(

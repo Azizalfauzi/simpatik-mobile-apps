@@ -25,3 +25,10 @@ class RoutesRegisterScreen extends RoutesState {
   @override
   List<Object> get props => [];
 }
+
+class RoutesMainPage extends RoutesState {
+  final int initial;
+  const RoutesMainPage(this.initial);
+  @override
+  List<Object> get props => [initial];
+}

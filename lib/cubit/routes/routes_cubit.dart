@@ -14,6 +14,9 @@ class RoutesCubit extends Cubit<RoutesState> {
       emit(RoutesLoginScreen());
     } else if (state is RoutesRegisterScreen) {
       emit(RoutesRegisterScreen());
+    } else if (state is RoutesMainPage) {
+      const int initial = 0;
+      emit(const RoutesMainPage(initial));
     } else {
       emit(RoutesLoginScreen());
     }

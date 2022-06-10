@@ -15,6 +15,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   void _onIntroEnd() {
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     context.read<RoutesCubit>().emit(RoutesLoginScreen());
     _addStatusPage();
   }
