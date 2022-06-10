@@ -19,9 +19,12 @@ class MyApp extends StatelessWidget {
           create: (_) => RoutesCubit(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
         debugShowCheckedModeBanner: false,
-        home: WrapperPage(),
+        home: const WrapperPage(),
       ),
     );
   }

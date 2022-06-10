@@ -67,12 +67,12 @@ class _SplashScreenPageGlobalState extends State<SplashScreenPageGlobal> {
           children: [
             // warna paling bawah
             Container(
-              color: Colors.white,
+              color: const Color(0xffE0E0E0),
             ),
             //warna dasar splash
             SafeArea(
               child: Container(
-                color: Colors.white,
+                color: const Color(0xffE0E0E0),
               ),
             ),
             //content

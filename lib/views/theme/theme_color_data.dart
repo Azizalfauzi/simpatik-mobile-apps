@@ -23,21 +23,24 @@ const Color kIndigoColor = Color(0xff5E35B1);
 const Color kBrownColor = Color(0xFF6D4C41);
 const Color kMetalColor = Color(0xFF727272);
 
-TextStyle blackTextStyleInter = GoogleFonts.inter(
+TextStyle blackTextStyleMontserrat = GoogleFonts.montserrat(
   color: kBlackColor,
 );
-TextStyle orangeTextStyleInter = GoogleFonts.inter(
+TextStyle orangeTextStyleMontserrat = GoogleFonts.montserrat(
   color: kPrimaryColor,
 );
+TextStyle greyTextStyleMontserrat = GoogleFonts.montserrat(
+  color: kSecondaryGreyColor,
+);
 
-TextStyle whiteTextStyleInter = GoogleFonts.inter(
+TextStyle whiteTextStyleMontserrat = GoogleFonts.montserrat(
   color: kWhiteColor,
 );
 
-TextStyle greenTextStyleInter = GoogleFonts.inter(
+TextStyle greenTextStyleMontserrat = GoogleFonts.montserrat(
   color: kgreenColor,
 );
-TextStyle redTextStyleInter = GoogleFonts.inter(
+TextStyle redTextStyleMontserrat = GoogleFonts.montserrat(
   color: kredColor,
 );
 
