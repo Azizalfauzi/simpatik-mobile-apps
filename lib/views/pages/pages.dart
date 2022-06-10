@@ -6,6 +6,7 @@ import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
 import 'package:simpatik_mobile_apps/views/theme/theme.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simpatik_mobile_apps/views/widget/widget.dart';
 
 
 

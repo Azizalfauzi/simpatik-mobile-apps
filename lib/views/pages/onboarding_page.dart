@@ -14,10 +14,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     await preferences.setInt('statuspage', statusPage);
   }
 
-  void _onIntroEnd(context) {
-     context.read<RoutesCubit>().emit(RoutesLoginScreen());
+  void _onIntroEnd() {
+    context.read<RoutesCubit>().emit(RoutesLoginScreen());
     _addStatusPage();
-
   }
 
   Widget _buildImage(String assetName, [double width = 250]) {
@@ -28,15 +27,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   Widget build(BuildContext context) {
     var pageDecoration = PageDecoration(
       titleTextStyle:
-          blackTextStyleInter.copyWith(fontWeight: bold, fontSize: 26),
-      bodyTextStyle: blackTextStyleInter.copyWith(fontWeight: light),
+          blackTextStyleMontserrat.copyWith(fontWeight: bold, fontSize: 26),
+      bodyTextStyle: blackTextStyleMontserrat.copyWith(fontWeight: light),
       bodyPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
+      pageColor: const Color(0xffE0E0E0),
       imagePadding: EdgeInsets.zero,
     );
 
     return IntroductionScreen(
-      globalBackgroundColor: Colors.white,
+      globalBackgroundColor: const Color(0xffE0E0E0),
       pages: [
         PageViewModel(
           title: "Pesan tiket liburan anda",
@@ -53,7 +52,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () => _onIntroEnd(context),
+      onDone: () => _onIntroEnd(),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,
       skipOrBackFlex: 0,
@@ -94,7 +93,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ),
       dotsContainerDecorator: const ShapeDecoration(
-        color: Colors.white24,
+        color: Color(0xffE0E0E0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),

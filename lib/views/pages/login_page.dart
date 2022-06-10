@@ -1,13 +1,248 @@
 part of 'pages.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Login Page"),
+    Widget header() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 100),
+            child: Center(
+              child: Image(
+                image: AssetImage(
+                  "assets/images/ic_logo_primary_small.png",
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 50, left: defaultMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Login",
+                  style: blackTextStyleMontserrat.copyWith(
+                      fontWeight: bold, fontSize: 28),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Masuk ke akun anda yang telah terdaftar",
+                  style: greyTextStyleMontserrat.copyWith(
+                      fontSize: 14, fontWeight: light),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+    }
+
+    Widget content() {
+      return Padding(
+        padding: const EdgeInsets.only(
+            left: defaultMargin, right: defaultMargin, top: 30),
+        child: Column(
+          children: [
+            Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.always,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Email",
+                    style: greyTextStyleMontserrat,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: MyUtility(context).height / 16,
+                    width: double.infinity,
+                    padding: EdgeInsets.all(MyUtility(context).width / 40),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.black12)),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Masukan email anda",
+                        errorStyle: const TextStyle(
+                            height: 0.5, fontStyle: FontStyle.italic),
+                        hintStyle: greyTextStyleMontserrat.copyWith(
+                            fontSize: 12,
+                            fontWeight: regular,
+                            fontStyle: FontStyle.italic),
+                      ),
+                      onSaved: (String? value) {},
+                      validator: (String? value) {
+                        return (value != null && value.contains('@'))
+                            ? 'Do not use the @ char.'
+                            : null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Password",
+                    style: greyTextStyleMontserrat,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: MyUtility(context).height / 16,
+                    width: double.infinity,
+                    padding: EdgeInsets.all(MyUtility(context).width / 40),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.black12)),
+                    child: TextFormField(
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Masukan password anda",
+                        errorStyle: const TextStyle(
+                            height: 0.5, fontStyle: FontStyle.italic),
+                        hintStyle: greyTextStyleMontserrat.copyWith(
+                            fontSize: 12,
+                            fontWeight: regular,
+                            fontStyle: FontStyle.italic),
+                        suffix: InkWell(
+                          onTap: _toggle,
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            size: 15.0,
+                            color: kPrimaryGreyColor,
+                          ),
+                        ),
+                      ),
+                      onSaved: (String? value) {},
+                      validator: (String? value) {
+                        return (value != null && value.contains('@'))
+                            ? 'Do not use the @ char.'
+                            : null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Lupa kata sandi ?",
+                  style: greyTextStyleMontserrat.copyWith(
+                      fontWeight: light, fontSize: 12),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Klik disini",
+                  style: orangeTextStyleMontserrat.copyWith(
+                      fontWeight: bold, fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget footer() {
+      return Padding(
+        padding: const EdgeInsets.only(
+          left: defaultMargin,
+          right: defaultMargin,
+          top: 100,
+        ),
+        child: Column(
+          children: [
+            CustomButton(
+              title: "Login",
+              onTap: () {},
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Belum punya akun?",
+                  style: greyTextStyleMontserrat.copyWith(
+                      fontWeight: light, fontSize: 12),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<RoutesCubit>().emit(RoutesRegisterScreen());
+                  },
+                  child: Text(
+                    "Register",
+                    style: orangeTextStyleMontserrat.copyWith(
+                        fontWeight: bold, fontSize: 12),
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "disini",
+                  style: greyTextStyleMontserrat.copyWith(
+                      fontWeight: bold, fontSize: 12),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            header(),
+            content(),
+            footer(),
+          ],
+        ),
       ),
     );
   }

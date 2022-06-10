@@ -17,7 +17,9 @@ class _WrapperPageState extends State<WrapperPage> {
               ? const OnBoardingPage()
               : (pageState is RoutesLoginScreen)
                   ? const LoginPage()
-                  : const SplashScreenPageGlobal(),
+                  : (pageState is RoutesRegisterScreen)
+                      ? const RegisterPage()
+                      : const SplashScreenPageGlobal(),
     );
   }
 }
