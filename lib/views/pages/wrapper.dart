@@ -19,7 +19,11 @@ class _WrapperPageState extends State<WrapperPage> {
                   ? const LoginPage()
                   : (pageState is RoutesRegisterScreen)
                       ? const RegisterPage()
-                      : const SplashScreenPageGlobal(),
+                      : (pageState is RoutesMainPage)
+                          ? MainPage(
+                              initialPage: pageState.initial,
+                            )
+                          : const SplashScreenPageGlobal(),
     );
   }
 }

@@ -192,7 +192,10 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             CustomButton(
               title: "Login",
-              onTap: () {},
+              onTap: () {
+                // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+                context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+              },
             ),
             const SizedBox(
               height: 20,
@@ -211,6 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
                     context.read<RoutesCubit>().emit(RoutesRegisterScreen());
                   },
                   child: Text(

@@ -21,11 +21,13 @@ class _SplashScreenPageGlobalState extends State<SplashScreenPageGlobal> {
     if (statusPage != null) {
       var duration = const Duration(milliseconds: 2000);
       Timer(duration, () {
+        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
         context.read<RoutesCubit>().emit(RoutesLoginScreen());
       });
     } else {
       var duration = const Duration(milliseconds: 2000);
       Timer(duration, () {
+        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
         context.read<RoutesCubit>().emit(RoutesOnboardingScreen());
       });
     }
