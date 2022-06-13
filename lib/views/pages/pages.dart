@@ -9,6 +9,9 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simpatik_mobile_apps/views/widget/widget.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
+import 'package:intl/intl.dart';
+
+import '../../cubit/counter/counter_cubit.dart';
 
 
 part 'login_page.dart';
@@ -20,3 +23,9 @@ part 'main_page.dart';
 part 'home_page.dart';
 part 'profile_page.dart';
 part 'transaction_page.dart';
+part 'detail_page.dart';
+part 'myticket_page.dart';
+part 'order_ticket_page.dart';
+part 'transaction_history_page.dart';
+part 'transaction_ongoing_page.dart';
+part 'myticket_status_page.dart';
