@@ -23,7 +23,16 @@ class _WrapperPageState extends State<WrapperPage> {
                           ? MainPage(
                               initialPage: pageState.initial,
                             )
-                          : const SplashScreenPageGlobal(),
+                          : (pageState is RoutesDetailScreen)
+                              ? const DetailPage()
+                              : (pageState is RoutesOrderTicketScreen)
+                                  ? const OrderTicketPage()
+                                  : (pageState is RoutesMyTicketScreen)
+                                      ? const MyTicketPage()
+                                      : (pageState
+                                              is RoutesMyTicketStatusScreen)
+                                          ? const MyTicketStatusPage()
+                                          : const SplashScreenPageGlobal(),
     );
   }
 }

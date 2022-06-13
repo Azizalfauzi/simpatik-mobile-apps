@@ -32,3 +32,22 @@ class RoutesMainPage extends RoutesState {
   @override
   List<Object> get props => [initial];
 }
+
+class RoutesDetailScreen extends RoutesState {
+  @override
+  List<Object> get props => [];
+}
+
+class RoutesOrderTicketScreen extends RoutesState {
+  @override
+  List<Object> get props => [];
+}
+
+class RoutesMyTicketScreen extends RoutesState {
+  @override
+  List<Object> get props => [];
+}
+class RoutesMyTicketStatusScreen extends RoutesState {
+  @override
+  List<Object> get props => [];
+}
