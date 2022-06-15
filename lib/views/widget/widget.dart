@@ -3,6 +3,8 @@ import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
 import 'package:simpatik_mobile_apps/views/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../model/models.dart';
+
 part 'custom_button_widget.dart';
 part 'custom_button_navigation_widget.dart';
 part 'custom_card_popular.dart';

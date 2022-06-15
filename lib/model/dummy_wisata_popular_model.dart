@@ -5,13 +5,13 @@ class DummyWisataPopular {
   String name;
   String image;
   String location;
-  int star;
+  int rating;
   DummyWisataPopular(
     this.id,
     this.name,
     this.image,
     this.location,
-    this.star,
+    this.rating,
   );
 }
 

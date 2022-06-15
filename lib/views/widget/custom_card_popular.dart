@@ -1,8 +1,16 @@
 part of 'widget.dart';
 
 class CustomCardPopular extends StatelessWidget {
+  final String image;
+  final String name;
+  final String location;
+  final int rating;
   const CustomCardPopular({
     Key? key,
+    required this.image,
+    required this.name,
+    required this.location,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -12,11 +20,90 @@ class CustomCardPopular extends StatelessWidget {
         context.read<RoutesCubit>().emit(RoutesDetailScreen());
       },
       child: Container(
-        width: 150,
-        height: 180,
+        width: 200,
+        height: 320,
+        margin: const EdgeInsets.only(
+          left: defaultMargin,
+        ),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey,
+          borderRadius: BorderRadius.circular(18),
+          color: Colors.grey.shade200,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 180,
+              height: 200,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                image: DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 55,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    color: kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 20,
+                        height: 20,
+                        margin: const EdgeInsets.only(right: 2),
+                        child: const Icon(
+                          Icons.star,
+                          color: Colors.orange,
+                        ),
+                      ),
+                      Text(
+                        rating.toString(),
+                        style: blackTextStyleMontserrat.copyWith(
+                          fontWeight: medium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: blackTextStyleMontserrat.copyWith(
+                      fontSize: 18,
+                      fontWeight: medium,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    location,
+                    style: greyTextStyleMontserrat.copyWith(
+                      fontWeight: light,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

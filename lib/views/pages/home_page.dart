@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SizedBox(
-          height: 220,
+          height: 400,
           width: double.infinity,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -100,14 +100,19 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: mockPopular
                     .map(
-                      (e) => const Padding(
-                        padding: EdgeInsets.fromLTRB(
+                      (e) => Padding(
+                        padding: const EdgeInsets.fromLTRB(
                           defaultMargin - 10,
                           0,
                           defaultMargin - 10,
                           0,
                         ),
-                        child: CustomCardPopular(),
+                        child: CustomCardPopular(
+                          image: e.image,
+                          name: e.name,
+                          location: e.location,
+                          rating: e.rating,
+                        ),
                       ),
                     )
                     .toList(),
