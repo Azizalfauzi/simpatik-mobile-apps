@@ -2,24 +2,35 @@ part of 'widget.dart';
 
 class CustomCardRekomendasi extends StatelessWidget {
   final int id;
-  final String title;
+  final String name;
   final String location;
   final String image;
-  final int star;
+  final String dekripsi;
+  final int price;
+  final int rating;
   const CustomCardRekomendasi({
     Key? key,
     required this.id,
-    required this.title,
+    required this.name,
     required this.location,
     required this.image,
-    required this.star,
+    required this.dekripsi,
+    required this.price,
+    required this.rating,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<RoutesCubit>().emit(RoutesDetailScreen());
+        context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              image,
+              name,
+              location,
+              dekripsi,
+              price,
+              rating,
+            ));
       },
       child: Container(
         margin: EdgeInsets.only(top: 16, bottom: (id / 4 == 1) ? 100 : 5),
@@ -47,7 +58,7 @@ class CustomCardRekomendasi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    name,
                     style: blackTextStyleMontserrat.copyWith(
                       fontSize: 18,
                       fontWeight: medium,
@@ -81,7 +92,7 @@ class CustomCardRekomendasi extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 2, top: 5),
                   child: Text(
-                    star.toString(),
+                    rating.toString(),
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: medium,
                     ),

@@ -4,12 +4,16 @@ class CustomCardPopular extends StatelessWidget {
   final String image;
   final String name;
   final String location;
+  final String dekripsi;
+  final int price;
   final int rating;
   const CustomCardPopular({
     Key? key,
     required this.image,
     required this.name,
     required this.location,
+    required this.dekripsi,
+    required this.price,
     required this.rating,
   }) : super(key: key);
 
@@ -17,7 +21,14 @@ class CustomCardPopular extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<RoutesCubit>().emit(RoutesDetailScreen());
+        context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              image,
+              name,
+              location,
+              dekripsi,
+              price,
+              rating,
+            ));
       },
       child: Container(
         width: 200,
@@ -69,7 +80,7 @@ class CustomCardPopular extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5,left: 5),
+                        padding: const EdgeInsets.only(top: 5, left: 5),
                         child: Text(
                           rating.toString(),
                           style: blackTextStyleMontserrat.copyWith(

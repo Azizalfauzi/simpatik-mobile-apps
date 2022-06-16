@@ -111,6 +111,8 @@ class _HomePageState extends State<HomePage> {
                           image: e.image,
                           name: e.name,
                           location: e.location,
+                          dekripsi: e.deskripsi,
+                          price: e.price,
                           rating: e.rating,
                         ),
                       ),
@@ -162,10 +164,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: CustomCardRekomendasi(
                           id: e.id,
-                          title: e.name,
+                          name: e.name,
                           location: e.location,
                           image: e.image,
-                          star: e.star,
+                          dekripsi: e.deskripsi,
+                          price: e.price,
+                          rating:e.star,
                         ),
                       ),
                     )

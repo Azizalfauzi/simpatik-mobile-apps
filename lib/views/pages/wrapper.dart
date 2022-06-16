@@ -24,9 +24,23 @@ class _WrapperPageState extends State<WrapperPage> {
                               initialPage: pageState.initial,
                             )
                           : (pageState is RoutesDetailScreen)
-                              ? const DetailPage()
+                              ? DetailPage(
+                                  image: pageState.image,
+                                  name: pageState.name,
+                                  location: pageState.location,
+                                  deskripsi: pageState.deskripsi,
+                                  price: pageState.price,
+                                  rate: pageState.rate,
+                                )
                               : (pageState is RoutesOrderTicketScreen)
-                                  ? const OrderTicketPage()
+                                  ? OrderTicketPage(
+                                      image: pageState.image,
+                                      name: pageState.name,
+                                      location: pageState.location,
+                                      deskripsi: pageState.deskripsi,
+                                      price: pageState.price,
+                                      rate: pageState.rate,
+                                    )
                                   : (pageState is RoutesMyTicketScreen)
                                       ? const MyTicketPage()
                                       : (pageState

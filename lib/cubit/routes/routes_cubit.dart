@@ -18,9 +18,35 @@ class RoutesCubit extends Cubit<RoutesState> {
       const int initial = 0;
       emit(const RoutesMainPage(initial));
     } else if (state is RoutesDetailScreen) {
-      emit(RoutesDetailScreen());
+      String image = '';
+      String name = '';
+      String location = '';
+      String deskripsi = '';
+      int rating = 0;
+      int price = 0;
+      emit(RoutesDetailScreen(
+        image,
+        name,
+        location,
+        deskripsi,
+        price,
+        rating,
+      ));
     } else if (state is RoutesOrderTicketScreen) {
-      emit(RoutesOrderTicketScreen());
+      String image = '';
+      String name = '';
+      String location = '';
+      String deskripsi = '';
+      int rating = 0;
+      int price = 0;
+      emit(RoutesOrderTicketScreen(
+        image,
+        name,
+        location,
+        deskripsi,
+        price,
+        rating,
+      ));
     } else if (state is RoutesMyTicketScreen) {
       emit(RoutesMyTicketScreen());
     } else if (state is RoutesMyTicketStatusScreen) {
