@@ -17,17 +17,6 @@ class CustomCardRekomendasi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   width: double.infinity,
-    //   height: 120,
-    //   margin: EdgeInsets.only(
-    //     bottom: (id / 4 == 1) ? 100 : 5,
-    //   ),
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.circular(20),
-    //     color: Colors.grey,
-    //   ),
-    // );
     return GestureDetector(
       onTap: () {
         context.read<RoutesCubit>().emit(RoutesDetailScreen());
@@ -36,7 +25,7 @@ class CustomCardRekomendasi extends StatelessWidget {
         margin: EdgeInsets.only(top: 16, bottom: (id / 4 == 1) ? 100 : 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
@@ -89,10 +78,13 @@ class CustomCardRekomendasi extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 ),
-                Text(
-                  star.toString(),
-                  style: blackTextStyleMontserrat.copyWith(
-                    fontWeight: medium,
+                Padding(
+                  padding: const EdgeInsets.only(left: 2, top: 5),
+                  child: Text(
+                    star.toString(),
+                    style: blackTextStyleMontserrat.copyWith(
+                      fontWeight: medium,
+                    ),
                   ),
                 ),
               ],

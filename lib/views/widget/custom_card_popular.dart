@@ -68,10 +68,13 @@ class CustomCardPopular extends StatelessWidget {
                           color: Colors.orange,
                         ),
                       ),
-                      Text(
-                        rating.toString(),
-                        style: blackTextStyleMontserrat.copyWith(
-                          fontWeight: medium,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5,left: 5),
+                        child: Text(
+                          rating.toString(),
+                          style: blackTextStyleMontserrat.copyWith(
+                            fontWeight: medium,
+                          ),
                         ),
                       ),
                     ],
