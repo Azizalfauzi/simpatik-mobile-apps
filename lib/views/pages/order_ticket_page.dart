@@ -1,13 +1,28 @@
 part of 'pages.dart';
 
 class OrderTicketPage extends StatefulWidget {
-  const OrderTicketPage({Key? key}) : super(key: key);
+  final String image;
+  final String name;
+  final String location;
+  final String deskripsi;
+  final int price;
+  final int rate;
+  const OrderTicketPage({
+    Key? key,
+    required this.image,
+    required this.name,
+    required this.location,
+    required this.deskripsi,
+    required this.price,
+    required this.rate,
+  }) : super(key: key);
 
   @override
   State<OrderTicketPage> createState() => _OrderTicketPageState();
 }
 
 class _OrderTicketPageState extends State<OrderTicketPage> {
+  DateTime? date;
   @override
   void initState() {
     return super.initState();
@@ -24,7 +39,14 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
               height: 60,
               child: IconButton(
                 onPressed: () {
-                  context.read<RoutesCubit>().emit(RoutesDetailScreen());
+                  context.read<RoutesCubit>().emit(RoutesDetailScreen(
+                        widget.image,
+                        widget.name,
+                        widget.location,
+                        widget.deskripsi,
+                        widget.price,
+                        widget.rate,
+                      ));
                   context.read<CounterCubit>().setOne();
                 },
                 icon: const Icon(
@@ -59,7 +81,12 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
           height: 320,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: Colors.grey,
+            image: DecorationImage(
+              image: AssetImage(
+                widget.image,
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         // header text
@@ -76,14 +103,14 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Farm House Lembang",
+                      widget.name,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      "Lembang,Bandung Jawa Barat",
+                      widget.location,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: light,
                         fontSize: 14,
@@ -93,7 +120,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                 ),
               ),
               Container(
-                width: 100,
+                width: 70,
                 height: 50,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 184, 175),
@@ -103,7 +130,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "4.5",
+                      widget.rate.toString(),
                       style:
                           blackTextStyleMontserrat.copyWith(fontWeight: bold),
                     ),
@@ -159,7 +186,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
           ),
           // deskripsi
           Text(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+            widget.deskripsi,
             style: blackTextStyleMontserrat.copyWith(
               fontSize: 14,
               fontWeight: light,
@@ -174,6 +201,60 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
               fontSize: 16,
               fontWeight: bold,
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 60,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.black45,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 5),
+                    child: Text(
+                      (date == null)
+                          ? "Pilih Tanggal"
+                          : "${date!.year}-${date!.month}-${date!.day}",
+                      textAlign: TextAlign.start,
+                      style: blackTextStyleMontserrat,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: IconButton(
+                  onPressed: () async {
+                    DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100),
+                    );
+                    if (newDate == null) return;
+                    setState(() => date = newDate);
+                  },
+                  icon: const Icon(
+                    Icons.date_range,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 30,
@@ -302,7 +383,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
                             locale: 'id_ID',
                             decimalDigits: 0,
                             symbol: "IDR.",
-                          ).format(25000 * state),
+                          ).format(widget.price * state),
                           style: orangeTextStyleMontserrat.copyWith(
                               fontSize: 16, fontWeight: bold),
                         );
@@ -323,7 +404,13 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
             height: 55,
             child: ElevatedButton(
               onPressed: () {
-                context.read<RoutesCubit>().emit(RoutesMyTicketScreen());
+                context.read<RoutesCubit>().emit(RoutesMyTicketScreen(
+                      widget.image,
+                      widget.name,
+                      date!,
+                      context.read<CounterCubit>().state,
+                      context.read<CounterCubit>().state * widget.price,
+                    ));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(kPrimaryColor),
@@ -352,7 +439,14 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.read<RoutesCubit>().emit(RoutesDetailScreen());
+        context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              widget.image,
+              widget.name,
+              widget.location,
+              widget.deskripsi,
+              widget.price,
+              widget.rate,
+            ));
         return false;
       },
       child: Scaffold(

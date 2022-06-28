@@ -3,3 +3,5 @@ part 'dummy_wisata_rekomendasi_model.dart';
 part 'dummy_ongoing_transaction_model.dart';
 part 'dummy_history_transaction_model.dart';
 part 'dummy_fasilitas_model.dart';
+part 'login_model.dart';
+part 'register_model.dart';

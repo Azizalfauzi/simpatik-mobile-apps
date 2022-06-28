@@ -1,7 +1,19 @@
 part of 'pages.dart';
 
 class MyTicketPage extends StatefulWidget {
-  const MyTicketPage({Key? key}) : super(key: key);
+  final String image;
+  final String name;
+  final DateTime date;
+  final int jumlahtiket;
+  final int totalBayar;
+  const MyTicketPage({
+    Key? key,
+    required this.image,
+    required this.name,
+    required this.date,
+    required this.jumlahtiket,
+    required this.totalBayar,
+  }) : super(key: key);
 
   @override
   State<MyTicketPage> createState() => _MyTicketPageState();
@@ -53,7 +65,12 @@ class _MyTicketPageState extends State<MyTicketPage> {
           height: 320,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: Colors.grey,
+            image: DecorationImage(
+              image: AssetImage(
+                widget.image,
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         // header text
@@ -70,7 +87,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Farm House Lembang",
+                      widget.name,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                         fontSize: 16,
@@ -142,7 +159,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                     height: 5,
                   ),
                   Text(
-                    "20 Mei 2022",
+                    "${widget.date.year}-${widget.date.month}-${widget.date.day}",
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: light,
                     ),
@@ -171,7 +188,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                       height: 5,
                     ),
                     Text(
-                      "6",
+                      widget.jumlahtiket.toString(),
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: light,
                       ),
@@ -194,11 +211,43 @@ class _MyTicketPageState extends State<MyTicketPage> {
                     Text(
                       "Belum Lunas",
                       style: orangeTextStyleMontserrat.copyWith(
-                        fontWeight: light,
+                        fontWeight: bold,
                       ),
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Total Bayar",
+                    style: blackTextStyleMontserrat.copyWith(
+                        fontWeight: bold, fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    NumberFormat.currency(
+                      locale: 'id_ID',
+                      decimalDigits: 0,
+                      symbol: "IDR.",
+                    ).format(widget.totalBayar),
+                    style: orangeTextStyleMontserrat.copyWith(
+                      fontWeight: bold,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -244,14 +293,20 @@ class _MyTicketPageState extends State<MyTicketPage> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        FlutterClipboard.copy('123-456-789')
+                            .then((value) => print('copy success!'));
+                      },
                       icon: const Icon(
                         Icons.copy,
                         color: kPrimaryColor,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        FlutterClipboard.copy('123-456-789')
+                            .then((value) => print('copy success!'));
+                      },
                       child: Text(
                         "Copy Text",
                         style: orangeTextStyleMontserrat.copyWith(

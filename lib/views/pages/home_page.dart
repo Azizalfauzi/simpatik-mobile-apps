@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SizedBox(
-          height: 400,
+          height: 350,
           width: double.infinity,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -102,15 +102,17 @@ class _HomePageState extends State<HomePage> {
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.fromLTRB(
-                          defaultMargin - 10,
+                          defaultMargin - 20,
                           0,
-                          defaultMargin - 10,
+                          defaultMargin - 20,
                           0,
                         ),
                         child: CustomCardPopular(
                           image: e.image,
                           name: e.name,
                           location: e.location,
+                          dekripsi: e.deskripsi,
+                          price: e.price,
                           rating: e.rating,
                         ),
                       ),
@@ -131,7 +133,6 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(
             left: defaultMargin,
             right: defaultMargin,
-            top: 20,
             bottom: 20,
           ),
           child: Row(
@@ -163,10 +164,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: CustomCardRekomendasi(
                           id: e.id,
-                          title: e.name,
+                          name: e.name,
                           location: e.location,
                           image: e.image,
-                          star: e.star,
+                          dekripsi: e.deskripsi,
+                          price: e.price,
+                          rating:e.star,
                         ),
                       ),
                     )

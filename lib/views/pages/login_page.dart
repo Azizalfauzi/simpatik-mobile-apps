@@ -16,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  String username = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -95,7 +97,11 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: regular,
                             fontStyle: FontStyle.italic),
                       ),
-                      onSaved: (String? value) {},
+                      onSaved: (String? value) {
+                        setState(() {
+                          username = value!;
+                        });
+                      },
                       validator: (String? value) {
                         return (value != null && value.contains('@'))
                             ? 'Do not use the @ char.'
@@ -143,7 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      onSaved: (String? value) {},
+                      onSaved: (String? value) {
+                        password = value!;
+                      },
                       validator: (String? value) {
                         return (value != null && value.contains('@'))
                             ? 'Do not use the @ char.'
@@ -190,11 +198,47 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Column(
           children: [
-            CustomButton(
-              title: "Login",
-              onTap: () {
-                // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-                context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+            BlocConsumer<AuthServicesCubit, AuthServicesState>(
+              listener: (context, state) {
+                if (state is AuthServicesLoginSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text("Berhasil login kedalam akun anda"),
+                    ),
+                  );
+                } else if (state is AuthServicesLoginFailed) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("Akun anda tidak ditemukan!"),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthServicesLoading) {
+                  return const Center(
+                    child: SpinKitFadingCircle(
+                      color: kPrimaryColor,
+                      size: 50,
+                    ),
+                  );
+                }
+                return CustomButton(
+                  title: "Login",
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      
+                      context
+                          .read<AuthServicesCubit>()
+                          .loginApp(username, password);
+                    }
+                    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+                    // context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+                  },
+                );
               },
             ),
             const SizedBox(

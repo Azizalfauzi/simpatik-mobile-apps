@@ -31,10 +31,10 @@ class _TransactionOngoingPageState extends State<TransactionOngoingPage> {
                           ),
                           child: CustomCardOnGoing(
                             id: e.id,
-                            title: e.name,
+                            name: e.name,
                             location: e.location,
                             image: e.image,
-                            star: e.star,
+                            rate: e.star,
                           ),
                         ),
                       )

@@ -2,41 +2,41 @@ part of 'widget.dart';
 
 class CustomCardRekomendasi extends StatelessWidget {
   final int id;
-  final String title;
+  final String name;
   final String location;
   final String image;
-  final int star;
+  final String dekripsi;
+  final int price;
+  final int rating;
   const CustomCardRekomendasi({
     Key? key,
     required this.id,
-    required this.title,
+    required this.name,
     required this.location,
     required this.image,
-    required this.star,
+    required this.dekripsi,
+    required this.price,
+    required this.rating,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   width: double.infinity,
-    //   height: 120,
-    //   margin: EdgeInsets.only(
-    //     bottom: (id / 4 == 1) ? 100 : 5,
-    //   ),
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.circular(20),
-    //     color: Colors.grey,
-    //   ),
-    // );
     return GestureDetector(
       onTap: () {
-        context.read<RoutesCubit>().emit(RoutesDetailScreen());
+        context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              image,
+              name,
+              location,
+              dekripsi,
+              price,
+              rating,
+            ));
       },
       child: Container(
         margin: EdgeInsets.only(top: 16, bottom: (id / 4 == 1) ? 100 : 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
@@ -58,7 +58,7 @@ class CustomCardRekomendasi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    name,
                     style: blackTextStyleMontserrat.copyWith(
                       fontSize: 18,
                       fontWeight: medium,
@@ -89,10 +89,13 @@ class CustomCardRekomendasi extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 ),
-                Text(
-                  star.toString(),
-                  style: blackTextStyleMontserrat.copyWith(
-                    fontWeight: medium,
+                Padding(
+                  padding: const EdgeInsets.only(left: 2, top: 5),
+                  child: Text(
+                    rating.toString(),
+                    style: blackTextStyleMontserrat.copyWith(
+                      fontWeight: medium,
+                    ),
                   ),
                 ),
               ],

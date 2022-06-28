@@ -1,7 +1,21 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final String image;
+  final String name;
+  final String location;
+  final String deskripsi;
+  final int price;
+  final int rate;
+  const DetailPage({
+    Key? key,
+    required this.image,
+    required this.name,
+    required this.location,
+    required this.deskripsi,
+    required this.price,
+    required this.rate,
+  }) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -53,7 +67,12 @@ class _DetailPageState extends State<DetailPage> {
           height: 320,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: Colors.grey,
+            image: DecorationImage(
+              image: AssetImage(
+                widget.image,
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         // header text
@@ -70,14 +89,14 @@ class _DetailPageState extends State<DetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Farm House Lembang",
+                      widget.name,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      "Lembang,Bandung Jawa Barat",
+                      widget.location,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: light,
                         fontSize: 14,
@@ -87,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               Container(
-                width: 100,
+                width: 70,
                 height: 50,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 184, 175),
@@ -97,7 +116,7 @@ class _DetailPageState extends State<DetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "4.5",
+                      widget.rate.toString(),
                       style:
                           blackTextStyleMontserrat.copyWith(fontWeight: bold),
                     ),
@@ -142,7 +161,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
           // title deskripsi
           Text(
-            "Deksripsi",
+            "Deskripsi",
             style: blackTextStyleMontserrat.copyWith(
               fontSize: 16,
               fontWeight: bold,
@@ -153,7 +172,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
           // deskripsi
           Text(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+            widget.deskripsi,
             style: blackTextStyleMontserrat.copyWith(
               fontSize: 14,
               fontWeight: light,
@@ -222,7 +241,11 @@ class _DetailPageState extends State<DetailPage> {
                 Row(
                   children: [
                     Text(
-                      "IDR 25.000",
+                      NumberFormat.currency(
+                        locale: 'id_ID',
+                        decimalDigits: 0,
+                        symbol: "IDR.",
+                      ).format(widget.price),
                       style: orangeTextStyleMontserrat.copyWith(
                           fontSize: 16, fontWeight: bold),
                     ),
@@ -241,7 +264,14 @@ class _DetailPageState extends State<DetailPage> {
             height: 55,
             child: ElevatedButton(
               onPressed: () {
-                context.read<RoutesCubit>().emit(RoutesOrderTicketScreen());
+                context.read<RoutesCubit>().emit(RoutesOrderTicketScreen(
+                      widget.image,
+                      widget.name,
+                      widget.location,
+                      widget.deskripsi,
+                      widget.price,
+                      widget.rate,
+                    ));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(kPrimaryColor),
