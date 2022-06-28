@@ -10,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simpatik_mobile_apps/views/widget/widget.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:intl/intl.dart';
-
+import 'package:clipboard/clipboard.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../cubit/api/auth/auth_services_cubit.dart';
 import '../../cubit/counter/counter_cubit.dart';
 
 

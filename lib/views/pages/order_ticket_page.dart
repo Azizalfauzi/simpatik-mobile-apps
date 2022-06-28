@@ -22,6 +22,7 @@ class OrderTicketPage extends StatefulWidget {
 }
 
 class _OrderTicketPageState extends State<OrderTicketPage> {
+  DateTime? date;
   @override
   void initState() {
     return super.initState();
@@ -202,6 +203,60 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
             ),
           ),
           const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 60,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.black45,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 5),
+                    child: Text(
+                      (date == null)
+                          ? "Pilih Tanggal"
+                          : "${date!.year}-${date!.month}-${date!.day}",
+                      textAlign: TextAlign.start,
+                      style: blackTextStyleMontserrat,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: IconButton(
+                  onPressed: () async {
+                    DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100),
+                    );
+                    if (newDate == null) return;
+                    setState(() => date = newDate);
+                  },
+                  icon: const Icon(
+                    Icons.date_range,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
             height: 30,
           ),
           Text(
@@ -349,7 +404,13 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
             height: 55,
             child: ElevatedButton(
               onPressed: () {
-                context.read<RoutesCubit>().emit(RoutesMyTicketScreen());
+                context.read<RoutesCubit>().emit(RoutesMyTicketScreen(
+                      widget.image,
+                      widget.name,
+                      date!,
+                      context.read<CounterCubit>().state,
+                      context.read<CounterCubit>().state * widget.price,
+                    ));
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(kPrimaryColor),

@@ -42,7 +42,13 @@ class _WrapperPageState extends State<WrapperPage> {
                                       rate: pageState.rate,
                                     )
                                   : (pageState is RoutesMyTicketScreen)
-                                      ? const MyTicketPage()
+                                      ? MyTicketPage(
+                                          image: pageState.image,
+                                          name: pageState.name,
+                                          date: pageState.date,
+                                          jumlahtiket: pageState.jumlahtiket,
+                                          totalBayar: pageState.totalBayar,
+                                        )
                                       : (pageState
                                               is RoutesMyTicketStatusScreen)
                                           ? const MyTicketStatusPage()

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simpatik_mobile_apps/cubit/api/auth/auth_services_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/counter/counter_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
 import 'package:simpatik_mobile_apps/views/pages/pages.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => CounterCubit(),
+        ),
+        BlocProvider(
+          create: (_) => AuthServicesCubit(),
         ),
       ],
       child: MaterialApp(

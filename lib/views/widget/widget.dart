@@ -13,3 +13,4 @@ part 'custom_tabbar_transaction_widget.dart';
 part 'custom_card_history_widget.dart';
 part 'custom_card_ongoing_widget.dart';
 part 'custom_card_fasilitas_widget.dart';
+part 'custom_booking_detail_widget.dart';

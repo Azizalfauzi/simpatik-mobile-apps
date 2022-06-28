@@ -48,7 +48,18 @@ class RoutesCubit extends Cubit<RoutesState> {
         rating,
       ));
     } else if (state is RoutesMyTicketScreen) {
-      emit(RoutesMyTicketScreen());
+      String image = '';
+      String name = '';
+      DateTime date = DateTime.now();
+      int jumlahtiket = 0;
+      int totalBayar = 0;
+      emit(RoutesMyTicketScreen(
+        image,
+        name,
+        date,
+        jumlahtiket,
+        totalBayar,
+      ));
     } else if (state is RoutesMyTicketStatusScreen) {
       emit(RoutesMyTicketStatusScreen());
     } else {

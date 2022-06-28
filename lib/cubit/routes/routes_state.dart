@@ -66,7 +66,7 @@ class RoutesOrderTicketScreen extends RoutesState {
   final String deskripsi;
   final int price;
   final int rate;
- const RoutesOrderTicketScreen(
+  const RoutesOrderTicketScreen(
     this.image,
     this.name,
     this.location,
@@ -76,18 +76,36 @@ class RoutesOrderTicketScreen extends RoutesState {
   );
   @override
   List<Object> get props => [
-     image,
+        image,
         name,
         location,
         deskripsi,
         rate,
         price,
-  ];
+      ];
 }
 
 class RoutesMyTicketScreen extends RoutesState {
+  final String image;
+  final String name;
+  final DateTime date;
+  final int jumlahtiket;
+  final int totalBayar;
+  const RoutesMyTicketScreen(
+    this.image,
+    this.name,
+    this.date,
+    this.jumlahtiket,
+    this.totalBayar,
+  );
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        image,
+        name,
+        date,
+        jumlahtiket,
+        totalBayar,
+      ];
 }
 
 class RoutesMyTicketStatusScreen extends RoutesState {
