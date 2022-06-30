@@ -13,6 +13,11 @@ class MyTicketPage extends StatefulWidget {
 }
 
 class _MyTicketPageState extends State<MyTicketPage> {
+  @override
+  void initState(){
+    context.read<TransactionServicesCubit>().getDataDetailTranaksi(widget.id);
+    return super.initState();
+  }
   Widget header(
     String image,
     String namelokasi,
