@@ -17,13 +17,20 @@ class _SplashScreenPageGlobalState extends State<SplashScreenPageGlobal> {
   Future<void> _checkStatusPageToken() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     int? statusPage = preferences.getInt('statuspage');
+    int? id = preferences.getInt('id');
 
     if (statusPage != null) {
-      var duration = const Duration(milliseconds: 2000);
-      Timer(duration, () {
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        context.read<RoutesCubit>().emit(RoutesLoginScreen());
-      });
+      if (id == null) {
+        var duration = const Duration(milliseconds: 2000);
+        Timer(duration, () {
+          context.read<RoutesCubit>().emit(RoutesLoginScreen());
+        });
+      } else {
+        var duration = const Duration(milliseconds: 2000);
+        Timer(duration, () {
+          context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+        });
+      }
     } else {
       var duration = const Duration(milliseconds: 2000);
       Timer(duration, () {

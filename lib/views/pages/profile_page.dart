@@ -8,6 +8,34 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    _checkNameData();
+    return super.initState();
+  }
+
+  String nameUser = '';
+  String emailUser = '';
+  Future<void> _checkNameData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? name = preferences.getString('name');
+    String? email = preferences.getString('email');
+
+    if (name != null && email != null) {
+      setState(() {
+        nameUser = name;
+        emailUser = email;
+        print("data tidak kosong");
+      });
+    } else {
+      setState(() {
+        nameUser = "";
+        emailUser = "";
+        print("data tidak kosong");
+      });
+    }
+  }
+
   Widget header() {
     return Padding(
       padding: const EdgeInsets.only(
@@ -73,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
               readOnly: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "azizalfa@gmail.com",
+                hintText: emailUser,
                 errorStyle:
                     const TextStyle(height: 0.5, fontStyle: FontStyle.italic),
                 hintStyle: greyTextStyleMontserrat.copyWith(
@@ -111,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
               readOnly: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Aziz Alfa",
+                hintText: nameUser,
                 errorStyle:
                     const TextStyle(height: 0.5, fontStyle: FontStyle.italic),
                 hintStyle: greyTextStyleMontserrat.copyWith(
@@ -184,7 +212,10 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           CustomButton(
             title: "Logout",
-            onTap: () {},
+            onTap: () {
+              context.read<AuthServicesCubit>().logoutGlobal();
+              context.read<RoutesCubit>().emit(RoutesLoginScreen());
+            },
           ),
         ],
       ),

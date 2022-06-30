@@ -1,14 +1,16 @@
 part of 'pages.dart';
 
 class OrderTicketPage extends StatefulWidget {
+  final int idWisata;
   final String image;
   final String name;
   final String location;
   final String deskripsi;
   final int price;
-  final int rate;
+  final double rate;
   const OrderTicketPage({
     Key? key,
+    required this.idWisata,
     required this.image,
     required this.name,
     required this.location,
@@ -40,6 +42,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
               child: IconButton(
                 onPressed: () {
                   context.read<RoutesCubit>().emit(RoutesDetailScreen(
+                        widget.idWisata,
                         widget.image,
                         widget.name,
                         widget.location,
@@ -82,7 +85,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
-              image: AssetImage(
+              image: NetworkImage(
                 widget.image,
               ),
               fit: BoxFit.cover,
@@ -402,32 +405,87 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
           SizedBox(
             width: 150,
             height: 55,
-            child: ElevatedButton(
-              onPressed: () {
-                context.read<RoutesCubit>().emit(RoutesMyTicketScreen(
-                      widget.image,
-                      widget.name,
-                      date!,
-                      context.read<CounterCubit>().state,
-                      context.read<CounterCubit>().state * widget.price,
-                    ));
+            child: BlocConsumer<TransactionServicesCubit,
+                TransactionServicesState>(
+              listener: (context, state) {
+                if (state is TransactionServicesCreateSuccess) {
+                  context
+                      .read<RoutesCubit>()
+                      .emit(RoutesMyTicketScreen(state.result.id));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text("Transaksi berhasil dibuat"),
+                    ),
+                  );
+                } else if (state is TransactionServicesCreateFailed) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("Gagal melakukan transaksi!"),
+                    ),
+                  );
+                }
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(kPrimaryColor),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    side: BorderSide.none,
+              builder: (context, state) {
+                if (state is TransactionServicesLoading) {
+                  return const Center(
+                    child: SpinKitFadingCircle(
+                      color: kPrimaryColor,
+                      size: 50,
+                    ),
+                  );
+                }
+                return ElevatedButton(
+                  onPressed: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    String? name = preferences.getString('name');
+                    String? email = preferences.getString('email');
+                    context.read<TransactionServicesCubit>().createTransaction(
+                          1,
+                          widget.idWisata,
+                          name!,
+                          email!,
+                          "085332",
+                          1,
+                          context.read<CounterCubit>().state,
+                          context.read<CounterCubit>().state * widget.price,
+                          "data kosong",
+                          "${date!.year}-${date!.month}-${date!.day}",
+                        );
+                    // print("id bank :" + 1.toString());
+                    // print("id wisata" + widget.idWisata.toString());
+                    // print("name pelanggan" + name!);
+                    // print("email pelanggan" + email!);
+                    // print("no hp pelanggan : 082222");
+                    // print("status_transaksi : 1");
+                    // print("jumlah tiket" +
+                    //     context.read<CounterCubit>().state.toString());
+                    // print("total bayar" +
+                    //     (context.read<CounterCubit>().state * widget.price)
+                    //         .toString());
+                    // print("bukti bayar : data kosong");
+                    // print("date" + "${date!.year}-${date!.month}-${date!.day}");
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side: BorderSide.none,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              child: Text(
-                "Get Ticket",
-                style: whiteTextStyleMontserrat.copyWith(
-                  fontWeight: medium,
-                  fontSize: 16,
-                ),
-              ),
+                  child: Text(
+                    "Get Ticket",
+                    style: whiteTextStyleMontserrat.copyWith(
+                      fontWeight: medium,
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -440,6 +498,7 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
     return WillPopScope(
       onWillPop: () async {
         context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              widget.idWisata,
               widget.image,
               widget.name,
               widget.location,

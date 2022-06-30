@@ -6,6 +6,7 @@ class CustomCardOnGoing extends StatelessWidget {
   final String location;
   final String image;
   final int rate;
+  final int statusTranasksi;
   const CustomCardOnGoing({
     Key? key,
     required this.id,
@@ -13,6 +14,7 @@ class CustomCardOnGoing extends StatelessWidget {
     required this.location,
     required this.image,
     required this.rate,
+    required this.statusTranasksi,
   }) : super(key: key);
 
   @override
@@ -39,8 +41,10 @@ class CustomCardOnGoing extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: AssetImage(image)),
+                  border: Border.all(width: 1, color: kPrimaryColor),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/images/ic_shopping.png"),
+                  ),
                 ),
               ),
               Expanded(
@@ -70,17 +74,8 @@ class CustomCardOnGoing extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 20,
-                    height: 20,
-                    margin: const EdgeInsets.only(right: 2),
-                    child: const Icon(
-                      Icons.star,
-                      color: Colors.orange,
-                    ),
-                  ),
                   Text(
-                    rate.toString(),
+                    "Transfer",
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: medium,
                     ),
@@ -91,64 +86,33 @@ class CustomCardOnGoing extends StatelessWidget {
           ),
 
           // NOTE: BOOKING DETAILS TEXT
-          Container(
-            margin:const EdgeInsets.only(top: 20),
-            child: Text(
-              'Booking Details',
-              style: blackTextStyleMontserrat.copyWith(
-                fontSize: 16,
-                fontWeight: semiBold,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'Booking Details',
+                  style: blackTextStyleMontserrat.copyWith(
+                    fontSize: 16,
+                    fontWeight: semiBold,
+                  ),
+                ),
               ),
-            ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Text(
+                  (statusTranasksi == 1) ? "Belum lunas" : "Lunas",
+                  style: (statusTranasksi == 1)
+                      ? orangeTextStyleMontserrat
+                      : blackTextStyleMontserrat.copyWith(
+                          fontSize: 16,
+                          fontWeight: semiBold,
+                        ),
+                ),
+              ),
+            ],
           ),
-
-          // // NOTE: BOOKING DETAILS ITEMS
-          // BookingDetailItems(
-          //   title: 'Traveler',
-          //   valueText: '${transaction.amountOfTraveler} person',
-          //   valueColor: kBlackColor,
-          // ),
-          // BookingDetailItems(
-          //   title: 'Seat',
-          //   valueText: transaction.selectedSeats,
-          //   valueColor: kBlackColor,
-          // ),
-          // BookingDetailItems(
-          //   title: 'Insurance',
-          //   valueText: transaction.insurance ? 'YES' : 'NO',
-          //   valueColor: transaction.insurance ? kGreenColor : kRedColor,
-          // ),
-          // BookingDetailItems(
-          //   title: 'Refundable',
-          //   valueText: transaction.refundable ? 'YES' : 'NO',
-          //   valueColor: transaction.refundable ? kGreenColor : kRedColor,
-          // ),
-
-          // BookingDetailItems(
-          //   title: 'VAT',
-          //   valueText: '${(transaction.vat * 100).toStringAsFixed(0)}%',
-          //   valueColor: kBlackColor,
-          // ),
-
-          // BookingDetailItems(
-          //   title: 'Price',
-          //   valueText: NumberFormat.currency(
-          //     locale: 'id',
-          //     symbol: 'IDR ',
-          //     decimalDigits: 0,
-          //   ).format(transaction.price),
-          //   valueColor: kBlackColor,
-          // ),
-
-          // BookingDetailItems(
-          //   title: 'Grand Total',
-          //   valueText: NumberFormat.currency(
-          //     locale: 'id',
-          //     symbol: 'IDR ',
-          //     decimalDigits: 0,
-          //   ).format(transaction.grandTotal),
-          //   valueColor: kPrimaryColor,
-          // ),
         ],
       ),
     );

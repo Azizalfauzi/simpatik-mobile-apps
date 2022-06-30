@@ -9,6 +9,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  // data form
+  String username = '';
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
   bool _obscureText = true;
   void _toggle() {
     setState(() {
@@ -100,6 +105,47 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "username",
+                  style: greyTextStyleMontserrat,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: MyUtility(context).height / 16,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(MyUtility(context).width / 40),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.black12)),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Masukan username anda",
+                      errorStyle: const TextStyle(
+                          height: 0.5, fontStyle: FontStyle.italic),
+                      hintStyle: greyTextStyleMontserrat.copyWith(
+                          fontSize: 12,
+                          fontWeight: regular,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    onSaved: (String? value) {
+                      username = value!;
+                    },
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
                   "Email",
                   style: greyTextStyleMontserrat,
                 ),
@@ -125,48 +171,15 @@ class _RegisterPageState extends State<RegisterPage> {
                           fontWeight: regular,
                           fontStyle: FontStyle.italic),
                     ),
-                    onSaved: (String? value) {},
-                    validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                    onSaved: (String? value) {
+                      email = value!;
                     },
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "Username",
-                  style: greyTextStyleMontserrat,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  height: MyUtility(context).height / 16,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(MyUtility(context).width / 40),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.black12)),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Masukan username anda",
-                      errorStyle: const TextStyle(
-                          height: 0.5, fontStyle: FontStyle.italic),
-                      hintStyle: greyTextStyleMontserrat.copyWith(
-                          fontSize: 12,
-                          fontWeight: regular,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    onSaved: (String? value) {},
-                    validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                 ),
@@ -250,11 +263,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    onSaved: (String? value) {},
-                    validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                    onSaved: (String? value) {
+                      password = value!;
+                    },
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                 ),
@@ -277,7 +294,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.black12)),
                   child: TextFormField(
-                    obscureText: _obscureText,
+                    obscureText: _obscureText2,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Masukan konfirmasi kata sandi anda",
@@ -290,7 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       suffix: InkWell(
                         onTap: _toggle2,
                         child: Icon(
-                          _obscureText
+                          _obscureText2
                               ? Icons.visibility
                               : Icons.visibility_off,
                           size: 15.0,
@@ -298,11 +315,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    onSaved: (String? value) {},
-                    validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                    onSaved: (String? value) {
+                      confirmPassword = value!;
+                    },
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
                     },
                   ),
                 ),
@@ -323,11 +344,84 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       child: Column(
         children: [
-          CustomButton(
-            title: "Register",
-            onTap: () {
-              // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-              context.read<RoutesCubit>().emit(const RoutesMainPage(0));
+          BlocConsumer<AuthServicesCubit, AuthServicesState>(
+            listener: (context, state) {
+              if (state is AuthServicesRegisterSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.green,
+                    content: Text(
+                        "Berhasil melakukan pendaftaran akun\nSilahkan melakukan login"),
+                  ),
+                );
+                context.read<RoutesCubit>().emit(RoutesLoginScreen());
+              } else if(state is AuthServicesRegisterFailed) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.red,
+                    content: Text("Gagal melakukan pendaftaran akun !"),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is AuthServicesLoading) {
+                return const Center(
+                  child: SpinKitFadingCircle(
+                    color: kPrimaryColor,
+                    size: 50,
+                  ),
+                );
+              }
+              return CustomButton(
+                title: "Register",
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    if (password == confirmPassword) {
+                      // print("email :" + email);
+                      // print("username :" + username);
+                      // print("password :" + password);
+                      // print("confirmPassword :" + confirmPassword);
+                      context.read<AuthServicesCubit>().registerApp(
+                            email,
+                            password,
+                            confirmPassword,
+                            username,
+                          );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text("Password tidak sama!"),
+                        ),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Input tidak boleh kosong!"),
+                      ),
+                    );
+                  }
+
+                  // if (username == "" &&
+                  //     email == "" &&
+                  //     password == "" &&
+                  //     confirmPassword == "") {
+                  //       print(username);
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //       backgroundColor: Colors.red,
+                  //       content: Text("Input tidak boleh kosong!"),
+                  //     ),
+                  //   );
+                  // } else {
+
+                  // }
+                },
+              );
             },
           ),
           const SizedBox(

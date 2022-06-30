@@ -1,9 +1,9 @@
 part of 'services.dart';
 
 class TransactionServices {
-  static Future<String> createTransaction(
-    String idBank,
-    String idWisata,
+  static Future<TransaksiModel> createTransaction(
+    int idBank,
+    int idWisata,
     String namaPelanggan,
     String emailPelanggan,
     String noHpPelanggan,
@@ -11,8 +11,9 @@ class TransactionServices {
     int jumlahTiket,
     int totalHarga,
     String buktiBayar,
+    String tanggalPesan,
   ) async {
-    String apiURL = "domain/login";
+    String apiURL = urlSimpatik + "transaksi";
 
     Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -29,19 +30,63 @@ class TransactionServices {
       "jumlah_tiket": jumlahTiket,
       "total_harga": totalHarga,
       "bukti_bayar": buktiBayar,
+      "tanggal_pesan": tanggalPesan,
     });
 
-    var apiResult = await http.post(
+    var response = await http.post(
       Uri.parse(apiURL),
       headers: headers,
       body: body,
     );
-
-    var jsonObject = json.decode(apiResult.body);
-    if (apiResult.statusCode >= 300) {
-      return jsonObject; // you can mapping json object also here
+    // print(response.body);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      TransaksiModel result = TransaksiModel.fromJson(data['data']);
+      return result;
     } else {
-      return jsonObject; // you can mapping json object also here
+      return throw Exception('Gagal melakukan registrasi!');
+    }
+  }
+
+  static Future<List<StatusTransaksiModel>> getDataTransaksi() async {
+    try {
+      final reponse = await Dio().get(urlSimpatik + 'transaksi');
+      final json = reponse.data;
+
+      if (reponse.statusCode == 200) {
+        print(json['data']);
+        List<StatusTransaksiModel> result = (json['data'] as Iterable)
+            .map((e) => StatusTransaksiModel.fromJson(e))
+            .toList();
+        print(result.toString());
+        return result;
+      } else if (reponse.statusCode == 404) {
+        return throw Exception(json['message']);
+      } else {
+        return throw Exception(json['msg']);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<TranasksiDetailData> getDetailTranasksi(int id) async {
+    try {
+      final reponse =
+          await Dio().get(urlSimpatik + 'transaksi/' + id.toString());
+      final json = reponse.data;
+      print(json);
+      if (reponse.statusCode == 200) {
+        TranasksiDetailData result = TranasksiDetailData.fromJson(json['data']);
+        print(result);
+        return result;
+      } else if (reponse.statusCode == 404) {
+        return throw Exception(json['message']);
+      } else {
+        return throw Exception(json['msg']);
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

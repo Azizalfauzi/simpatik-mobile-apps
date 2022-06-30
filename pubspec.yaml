@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  dio: ^4.0.6
   equatable: ^2.0.3
   flutter:
     sdk: flutter
@@ -39,13 +40,19 @@ dev_dependencies:
   double_back_to_close_app: ^2.1.0
   flutter_bloc: ^8.0.1
   flutter_lints: ^1.0.0
+  flutter_spinkit: ^5.1.0
   flutter_test:
     sdk: flutter
   google_fonts: ^3.0.1
   intl: ^0.17.0
   introduction_screen: ^3.0.2
   shared_preferences: ^2.0.15
-  flutter_spinkit: ^5.1.0
+  flutter_launcher_icons: ^0.9.3
+  
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/ic_logo_primary_small.png"  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

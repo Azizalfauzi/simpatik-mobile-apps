@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Email",
+                    "username",
                     style: greyTextStyleMontserrat,
                   ),
                   const SizedBox(
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Masukan email anda",
+                        hintText: "Masukan username anda",
                         errorStyle: const TextStyle(
                             height: 0.5, fontStyle: FontStyle.italic),
                         hintStyle: greyTextStyleMontserrat.copyWith(
@@ -207,6 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                       content: Text("Berhasil login kedalam akun anda"),
                     ),
                   );
+                  context.read<RoutesCubit>().emit(const RoutesMainPage(0));
                 } else if (state is AuthServicesLoginFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -230,13 +231,12 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      
+
                       context
                           .read<AuthServicesCubit>()
                           .loginApp(username, password);
                     }
                     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-                    // context.read<RoutesCubit>().emit(const RoutesMainPage(0));
                   },
                 );
               },

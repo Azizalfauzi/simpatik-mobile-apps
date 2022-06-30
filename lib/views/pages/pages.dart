@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simpatik_mobile_apps/cubit/api/transaction/transaction_services_cubit.dart';
+import 'package:simpatik_mobile_apps/cubit/api/wisata/wisata_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
 import 'package:simpatik_mobile_apps/model/models.dart';
 import 'package:simpatik_mobile_apps/views/theme/theme.dart';

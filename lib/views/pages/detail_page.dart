@@ -1,14 +1,16 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
+  final int idWisata;
   final String image;
   final String name;
   final String location;
   final String deskripsi;
   final int price;
-  final int rate;
+  final double rate;
   const DetailPage({
     Key? key,
+    required this.idWisata,
     required this.image,
     required this.name,
     required this.location,
@@ -68,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
-              image: AssetImage(
+              image: NetworkImage(
                 widget.image,
               ),
               fit: BoxFit.cover,
@@ -265,6 +267,7 @@ class _DetailPageState extends State<DetailPage> {
             child: ElevatedButton(
               onPressed: () {
                 context.read<RoutesCubit>().emit(RoutesOrderTicketScreen(
+                      widget.idWisata,
                       widget.image,
                       widget.name,
                       widget.location,
