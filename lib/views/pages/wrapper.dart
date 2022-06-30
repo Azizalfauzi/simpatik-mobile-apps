@@ -25,6 +25,7 @@ class _WrapperPageState extends State<WrapperPage> {
                             )
                           : (pageState is RoutesDetailScreen)
                               ? DetailPage(
+                                  idWisata: pageState.idWisata,
                                   image: pageState.image,
                                   name: pageState.name,
                                   location: pageState.location,
@@ -34,6 +35,7 @@ class _WrapperPageState extends State<WrapperPage> {
                                 )
                               : (pageState is RoutesOrderTicketScreen)
                                   ? OrderTicketPage(
+                                      idWisata: pageState.idWisata,
                                       image: pageState.image,
                                       name: pageState.name,
                                       location: pageState.location,
@@ -43,15 +45,13 @@ class _WrapperPageState extends State<WrapperPage> {
                                     )
                                   : (pageState is RoutesMyTicketScreen)
                                       ? MyTicketPage(
-                                          image: pageState.image,
-                                          name: pageState.name,
-                                          date: pageState.date,
-                                          jumlahtiket: pageState.jumlahtiket,
-                                          totalBayar: pageState.totalBayar,
+                                          id: pageState.id,
                                         )
                                       : (pageState
                                               is RoutesMyTicketStatusScreen)
-                                          ? const MyTicketStatusPage()
+                                          ? MyTicketStatusPage(
+                                              id: pageState.id,
+                                            )
                                           : const SplashScreenPageGlobal(),
     );
   }

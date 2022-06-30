@@ -8,6 +8,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<WisataCubit>().getWisata();
+    _checkNameData();
+    return super.initState();
+  }
+
+  String nameUser = '';
+  Future<void> _checkNameData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? name = preferences.getString('name');
+
+    if (name != null) {
+      setState(() {
+        nameUser = name;
+        print("data tidak kosong");
+      });
+    } else {
+      setState(() {
+        nameUser = "";
+        print("data tidak kosong");
+      });
+    }
+  }
+
   Widget header() {
     return Container(
       height: 120,
@@ -42,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                         width: 5,
                       ),
                       Text(
-                        "Aziz Alfauzi",
+                        nameUser,
                         style: blackTextStyleMontserrat.copyWith(
                             fontWeight: bold, fontSize: 24),
                       ),
@@ -94,32 +119,43 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 350,
           width: double.infinity,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              Row(
-                children: mockPopular
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          defaultMargin - 20,
-                          0,
-                          defaultMargin - 20,
-                          0,
-                        ),
-                        child: CustomCardPopular(
-                          image: e.image,
-                          name: e.name,
-                          location: e.location,
-                          dekripsi: e.deskripsi,
-                          price: e.price,
-                          rating: e.rating,
-                        ),
-                      ),
+          child: BlocBuilder<WisataCubit, WisataState>(
+            builder: (context, state) {
+              if (state is WisataGetSuccess) {
+                return ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Row(
+                      children: state.result
+                          .map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                defaultMargin - 20,
+                                0,
+                                defaultMargin - 20,
+                                0,
+                              ),
+                              child: CustomCardPopular(
+                                idWisata: e.id,
+                                image: e.wisataImage,
+                                name: e.wisataName,
+                                location: e.wisataName,
+                                dekripsi: e.wisataName,
+                                price: int.parse(e.tiketPrice),
+                                rating: double.parse(e.wisataRating),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     )
-                    .toList(),
-              )
-            ],
+                  ],
+                );
+              } else if (state is WisataGetFailed) {
+                return const SizedBox();
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
         )
       ],
@@ -149,33 +185,40 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 380,
           width: double.infinity,
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              Column(
-                children: mockRekomendasi
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          defaultMargin - 10,
-                          5,
-                          defaultMargin - 10,
-                          5,
-                        ),
-                        child: CustomCardRekomendasi(
-                          id: e.id,
-                          name: e.name,
-                          location: e.location,
-                          image: e.image,
-                          dekripsi: e.deskripsi,
-                          price: e.price,
-                          rating:e.star,
-                        ),
-                      ),
+          child: BlocBuilder<WisataCubit, WisataState>(
+            builder: (context, state) {
+              if (state is WisataGetSuccess) {
+                return ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Column(
+                      children: state.result
+                          .map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                defaultMargin - 10,
+                                5,
+                                defaultMargin - 10,
+                                5,
+                              ),
+                              child: CustomCardRekomendasi(
+                                image: e.wisataImage,
+                                name: e.wisataName,
+                                location: e.wisataName,
+                                dekripsi: e.wisataName,
+                                price: int.parse(e.tiketPrice),
+                                rating: double.parse(e.wisataRating),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     )
-                    .toList(),
-              )
-            ],
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
         )
       ],

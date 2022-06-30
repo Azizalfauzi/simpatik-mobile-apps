@@ -18,13 +18,15 @@ class RoutesCubit extends Cubit<RoutesState> {
       const int initial = 0;
       emit(const RoutesMainPage(initial));
     } else if (state is RoutesDetailScreen) {
+      int idWisata = 0;
       String image = '';
       String name = '';
       String location = '';
       String deskripsi = '';
-      int rating = 0;
+      double rating = 0.0;
       int price = 0;
       emit(RoutesDetailScreen(
+        idWisata,
         image,
         name,
         location,
@@ -33,13 +35,15 @@ class RoutesCubit extends Cubit<RoutesState> {
         rating,
       ));
     } else if (state is RoutesOrderTicketScreen) {
+      int idWisata = 0;
       String image = '';
       String name = '';
       String location = '';
       String deskripsi = '';
-      int rating = 0;
+      double rating = 0.0;
       int price = 0;
       emit(RoutesOrderTicketScreen(
+        idWisata,
         image,
         name,
         location,
@@ -48,20 +52,13 @@ class RoutesCubit extends Cubit<RoutesState> {
         rating,
       ));
     } else if (state is RoutesMyTicketScreen) {
-      String image = '';
-      String name = '';
-      DateTime date = DateTime.now();
-      int jumlahtiket = 0;
-      int totalBayar = 0;
+      int id = 0;
       emit(RoutesMyTicketScreen(
-        image,
-        name,
-        date,
-        jumlahtiket,
-        totalBayar,
+        id,
       ));
     } else if (state is RoutesMyTicketStatusScreen) {
-      emit(RoutesMyTicketStatusScreen());
+      int id = 0;
+      emit(RoutesMyTicketStatusScreen(id));
     } else {
       emit(RoutesLoginScreen());
     }

@@ -1,7 +1,11 @@
 part of 'pages.dart';
 
 class MyTicketStatusPage extends StatefulWidget {
-  const MyTicketStatusPage({Key? key}) : super(key: key);
+  final int id;
+  const MyTicketStatusPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<MyTicketStatusPage> createState() => _MyTicketStatusPageState();

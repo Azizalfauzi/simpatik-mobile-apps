@@ -5,3 +5,7 @@ part 'dummy_history_transaction_model.dart';
 part 'dummy_fasilitas_model.dart';
 part 'login_model.dart';
 part 'register_model.dart';
+part 'tempat_wisata_model.dart';
+part 'transaksi_model.dart';
+part 'status_transaksi_model.dart';
+part 'transaksi_detail_model.dart';

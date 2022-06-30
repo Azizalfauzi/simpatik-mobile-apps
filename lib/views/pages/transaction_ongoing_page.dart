@@ -8,6 +8,12 @@ class TransactionOngoingPage extends StatefulWidget {
 }
 
 class _TransactionOngoingPageState extends State<TransactionOngoingPage> {
+  @override
+  void initState() {
+    context.read<TransactionServicesCubit>().getDataTranaksi();
+    super.initState();
+  }
+
   Widget contentOnGoingTransaction() {
     return Padding(
       padding: const EdgeInsets.only(top: 120),
@@ -16,31 +22,72 @@ class _TransactionOngoingPageState extends State<TransactionOngoingPage> {
           SizedBox(
             height: 700,
             width: double.infinity,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                Column(
-                  children: mockOnGoing
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            defaultMargin - 10,
-                            5,
-                            defaultMargin - 10,
-                            5,
+            child:
+                BlocBuilder<TransactionServicesCubit, TransactionServicesState>(
+              builder: (context, state) {
+                if (state is TransactionServicesGetSuccess) {
+                  if (state.result.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/ic_shopping_grey.png'),
+                              ),
+                            ),
                           ),
-                          child: CustomCardOnGoing(
-                            id: e.id,
-                            name: e.name,
-                            location: e.location,
-                            image: e.image,
-                            rate: e.star,
+                          Text(
+                            "Belum ada transaksi",
+                            style: blackTextStyleMontserrat,
                           ),
-                        ),
-                      )
-                      .toList(),
-                )
-              ],
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(top: 8, bottom: 100),
+                      itemCount: state.result.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        var dataTransaction = state.result[index];
+                        if (dataTransaction.statusTransaksi != 1) {
+                          return const SizedBox();
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                defaultMargin, 0, defaultMargin, defaultMargin),
+                            child: GestureDetector(
+                              onTap: () {
+                                context.read<RoutesCubit>().emit(
+                                    RoutesMyTicketScreen(dataTransaction.id));
+                              },
+                              child: CustomCardOnGoing(
+                                id: dataTransaction.id,
+                                name: dataTransaction.namaPelanggan,
+                                location: dataTransaction.wisataName,
+                                image: "",
+                                rate: dataTransaction.id,
+                                statusTranasksi:
+                                    dataTransaction.statusTransaksi,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }
+                } else if (state is TransactionServicesGetFailed) {
+                  return const SizedBox();
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           )
         ],

@@ -1,16 +1,14 @@
 part of 'widget.dart';
 
 class CustomCardRekomendasi extends StatelessWidget {
-  final int id;
   final String name;
   final String location;
   final String image;
   final String dekripsi;
   final int price;
-  final int rating;
+  final double rating;
   const CustomCardRekomendasi({
     Key? key,
-    required this.id,
     required this.name,
     required this.location,
     required this.image,
@@ -23,17 +21,17 @@ class CustomCardRekomendasi extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<RoutesCubit>().emit(RoutesDetailScreen(
-              image,
-              name,
-              location,
-              dekripsi,
-              price,
-              rating,
-            ));
+        // context.read<RoutesCubit>().emit(RoutesDetailScreen(
+        //       image,
+        //       name,
+        //       location,
+        //       dekripsi,
+        //       price,
+        //       rating,
+        //     ));
       },
       child: Container(
-        margin: EdgeInsets.only(top: 16, bottom: (id / 4 == 1) ? 100 : 5),
+        margin: const EdgeInsets.only(top: 16, bottom: defaultMargin),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.grey.shade200,
@@ -47,9 +45,10 @@ class CustomCardRekomendasi extends StatelessWidget {
               margin: const EdgeInsets.only(right: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
-                image: DecorationImage(
+                image: const DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(image),
+                  image: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/smaga-apps.appspot.com/o/image_destination2.png?alt=media&token=34ee2eb1-7f58-4cda-aebc-3c6cfaf97b0c"),
                 ),
               ),
             ),

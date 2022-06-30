@@ -34,13 +34,15 @@ class RoutesMainPage extends RoutesState {
 }
 
 class RoutesDetailScreen extends RoutesState {
+  final int idWisata;
   final String image;
   final String name;
   final String location;
   final String deskripsi;
   final int price;
-  final int rate;
+  final double rate;
   const RoutesDetailScreen(
+    this.idWisata,
     this.image,
     this.name,
     this.location,
@@ -60,13 +62,15 @@ class RoutesDetailScreen extends RoutesState {
 }
 
 class RoutesOrderTicketScreen extends RoutesState {
+  final int idWisata;
   final String image;
   final String name;
   final String location;
   final String deskripsi;
   final int price;
-  final int rate;
+  final double rate;
   const RoutesOrderTicketScreen(
+    this.idWisata,
     this.image,
     this.name,
     this.location,
@@ -76,6 +80,7 @@ class RoutesOrderTicketScreen extends RoutesState {
   );
   @override
   List<Object> get props => [
+        idWisata,
         image,
         name,
         location,
@@ -86,29 +91,17 @@ class RoutesOrderTicketScreen extends RoutesState {
 }
 
 class RoutesMyTicketScreen extends RoutesState {
-  final String image;
-  final String name;
-  final DateTime date;
-  final int jumlahtiket;
-  final int totalBayar;
+  final int id;
   const RoutesMyTicketScreen(
-    this.image,
-    this.name,
-    this.date,
-    this.jumlahtiket,
-    this.totalBayar,
+    this.id,
   );
   @override
-  List<Object> get props => [
-        image,
-        name,
-        date,
-        jumlahtiket,
-        totalBayar,
-      ];
+  List<Object> get props => [id];
 }
 
 class RoutesMyTicketStatusScreen extends RoutesState {
+  final int id;
+  const RoutesMyTicketStatusScreen(this.id);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [id];
 }

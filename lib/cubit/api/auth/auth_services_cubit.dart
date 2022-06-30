@@ -19,18 +19,18 @@ class AuthServicesCubit extends Cubit<AuthServicesState> {
   }
 
   void registerApp(
-    String email,
+    String username,
     String password,
     String confirmPassword,
-    String username,
+    String email,
   ) async {
     try {
       emit(AuthServicesLoading());
       RegitserModel result = await AuthServices.registerApp(
-        email,
+        username,
         password,
         confirmPassword,
-        username,
+        email,
       );
       emit(AuthServicesRegisterSuccess(result));
     } catch (e) {

@@ -1,18 +1,11 @@
 part of 'pages.dart';
 
 class MyTicketPage extends StatefulWidget {
-  final String image;
-  final String name;
-  final DateTime date;
-  final int jumlahtiket;
-  final int totalBayar;
+  final int id;
+
   const MyTicketPage({
     Key? key,
-    required this.image,
-    required this.name,
-    required this.date,
-    required this.jumlahtiket,
-    required this.totalBayar,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -20,7 +13,10 @@ class MyTicketPage extends StatefulWidget {
 }
 
 class _MyTicketPageState extends State<MyTicketPage> {
-  Widget header() {
+  Widget header(
+    String image,
+    String namelokasi,
+  ) {
     return Column(
       children: [
         // header back and title
@@ -65,9 +61,9 @@ class _MyTicketPageState extends State<MyTicketPage> {
           height: 320,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage(
-                widget.image,
+                "assets/images/image_destination1.png",
               ),
               fit: BoxFit.cover,
             ),
@@ -87,7 +83,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.name,
+                      namelokasi,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                         fontSize: 16,
@@ -115,7 +111,8 @@ class _MyTicketPageState extends State<MyTicketPage> {
     );
   }
 
-  Widget content() {
+  Widget content(String name, String tanggalPesan, int jumlahTiket,
+      int statusTiket, int totalBayar) {
     return Padding(
       padding: const EdgeInsets.only(
         left: defaultMargin,
@@ -140,7 +137,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                     height: 5,
                   ),
                   Text(
-                    "Aziz Alfauzi",
+                    name,
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: light,
                     ),
@@ -159,7 +156,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                     height: 5,
                   ),
                   Text(
-                    "${widget.date.year}-${widget.date.month}-${widget.date.day}",
+                    tanggalPesan,
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: light,
                     ),
@@ -188,7 +185,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                       height: 5,
                     ),
                     Text(
-                      widget.jumlahtiket.toString(),
+                      jumlahTiket.toString(),
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: light,
                       ),
@@ -209,7 +206,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                       height: 5,
                     ),
                     Text(
-                      "Belum Lunas",
+                      (statusTiket != 1) ? "Lunas" : "Belum Lunas",
                       style: orangeTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                       ),
@@ -242,7 +239,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                       locale: 'id_ID',
                       decimalDigits: 0,
                       symbol: "IDR.",
-                    ).format(widget.totalBayar),
+                    ).format(totalBayar),
                     style: orangeTextStyleMontserrat.copyWith(
                       fontWeight: bold,
                     ),
@@ -366,7 +363,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                 onPressed: () {
                   context
                       .read<RoutesCubit>()
-                      .emit(RoutesMyTicketStatusScreen());
+                      .emit(RoutesMyTicketStatusScreen(widget.id));
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(kPrimaryColor),
@@ -397,18 +394,36 @@ class _MyTicketPageState extends State<MyTicketPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.read<RoutesCubit>().emit(RoutesMainPage(1));
+        context.read<RoutesCubit>().emit(const RoutesMainPage(1));
         return false;
       },
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                header(),
-                content(),
-                footer(),
-              ],
+            child:
+                BlocBuilder<TransactionServicesCubit, TransactionServicesState>(
+              builder: (context, state) {
+                if (state is TransactionServicesGetDetailSuccess) {
+                  return Column(
+                    children: [
+                      header(
+                        state.result.buktiBayar,
+                        state.result.namaPelanggan,
+                      ),
+                      content(
+                        state.result.namaPelanggan,
+                        state.result.tanggalPesan,
+                        state.result.jumlahTiket,
+                        state.result.statusTransaksi,
+                        int.parse(state.result.totalHarga),
+                      ),
+                      footer(),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           ),
         ),
