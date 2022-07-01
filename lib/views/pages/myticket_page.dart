@@ -318,7 +318,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
             children: [
               Expanded(
                 child: Text(
-                  "123-456-789",
+                  "BCA : 123-456-789",
                   style: blackTextStyleMontserrat.copyWith(
                     fontWeight: bold,
                     fontSize: 16,
@@ -567,21 +567,25 @@ class _MyTicketPageState extends State<MyTicketPage> {
                             // print("total bayar" + totalBayar.toString());
                             // print("bukti bayar :" + fileName);
                             // print("date " + tanggalPesanan);
-                            context
-                                .read<UpdateTransaksiCubit>()
-                                .updateTransaction(
-                                  widget.id,
-                                  1,
-                                  idWisata,
-                                  name!,
-                                  email!,
-                                  "085332",
-                                  2,
-                                  jumlahTiket,
-                                  totalBayar,
-                                  fileName,
-                                  tanggalPesanan,
-                                );
+                            Codec<String, String> stringToBase64Url =
+                                utf8.fuse(base64Url);
+                            String encoded = stringToBase64Url.encode(fileName);
+                            print(encoded);
+                            // context
+                            //     .read<UpdateTransaksiCubit>()
+                            //     .updateTransaction(
+                            //       widget.id,
+                            //       1,
+                            //       idWisata,
+                            //       name!,
+                            //       email!,
+                            //       "085332",
+                            //       2,
+                            //       jumlahTiket,
+                            //       totalBayar,
+                            //       fileName,
+                            //       tanggalPesanan,
+                            //     );
                           },
                         );
                       },

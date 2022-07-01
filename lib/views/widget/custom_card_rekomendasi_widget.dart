@@ -19,17 +19,12 @@ class CustomCardRekomendasi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Uint8List convertBase64Image(String base64String) {
+      return const Base64Decoder().convert(base64String.split(',').last);
+    }
+
     return GestureDetector(
-      onTap: () {
-        // context.read<RoutesCubit>().emit(RoutesDetailScreen(
-        //       image,
-        //       name,
-        //       location,
-        //       dekripsi,
-        //       price,
-        //       rating,
-        //     ));
-      },
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.only(top: 16, bottom: defaultMargin),
         padding: const EdgeInsets.all(10),
@@ -45,11 +40,10 @@ class CustomCardRekomendasi extends StatelessWidget {
               margin: const EdgeInsets.only(right: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
-                image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/smaga-apps.appspot.com/o/image_destination2.png?alt=media&token=34ee2eb1-7f58-4cda-aebc-3c6cfaf97b0c"),
-                ),
+              ),
+              child: Image.memory(
+                convertBase64Image(image),
+                gaplessPlayback: true,
               ),
             ),
             Expanded(
