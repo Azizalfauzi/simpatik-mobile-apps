@@ -21,6 +21,10 @@ class CustomCardPopular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Uint8List convertBase64Image(String base64String) {
+      return const Base64Decoder().convert(base64String.split(',').last);
+    }
+
     return GestureDetector(
       onTap: () {
         context.read<RoutesCubit>().emit(RoutesDetailScreen(
@@ -53,48 +57,55 @@ class CustomCardPopular extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/smaga-apps.appspot.com/o/image_destination2.png?alt=media&token=34ee2eb1-7f58-4cda-aebc-3c6cfaf97b0c"),
-                  fit: BoxFit.cover,
-                ),
               ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 55,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                    color: kWhiteColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(18),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 180,
+                    height: 200,
+                    child: Image.memory(
+                      convertBase64Image(image),
+                      gaplessPlayback: true,
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 20,
-                        height: 20,
-                        margin: const EdgeInsets.only(right: 2),
-                        child: const Icon(
-                          Icons.star,
-                          color: Colors.orange,
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 55,
+                      height: 30,
+                      decoration: const BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(18),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, left: 5),
-                        child: Text(
-                          rating.toString(),
-                          style: blackTextStyleMontserrat.copyWith(
-                            fontWeight: medium,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 20,
+                            height: 20,
+                            margin: const EdgeInsets.only(right: 2),
+                            child: const Icon(
+                              Icons.star,
+                              color: Colors.orange,
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5, left: 5),
+                            child: Text(
+                              rating.toString(),
+                              style: blackTextStyleMontserrat.copyWith(
+                                fontWeight: medium,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Container(

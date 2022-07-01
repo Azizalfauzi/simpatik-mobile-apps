@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simpatik_mobile_apps/cubit/api/auth/auth_services_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/api/transaction/transaction_services_cubit.dart';
+import 'package:simpatik_mobile_apps/cubit/api/update_transaksi/update_transaksi_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/api/wisata/wisata_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/counter/counter_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => TransactionServicesCubit(),
+        ),
+        BlocProvider(
+          create: (_) => UpdateTransaksiCubit(),
         ),
       ],
       child: MaterialApp(

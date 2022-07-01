@@ -1,5 +1,7 @@
 
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:simpatik_mobile_apps/cubit/routes/routes_cubit.dart';
 import 'package:simpatik_mobile_apps/views/theme/theme.dart';

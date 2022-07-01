@@ -52,7 +52,7 @@ class TransactionServicesCubit extends Cubit<TransactionServicesState> {
   void getDataDetailTranaksi(int id) async {
     try {
       emit(TransactionServicesLoading());
-      TranasksiDetailData result =
+      TransaksiDetailData result =
           await TransactionServices.getDetailTranasksi(id);
       emit(TransactionServicesGetDetailSuccess(result));
     } catch (e) {

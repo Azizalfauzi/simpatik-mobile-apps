@@ -102,13 +102,18 @@ class CustomCardOnGoing extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: Text(
-                  (statusTranasksi == 1) ? "Belum lunas" : "Lunas",
+                  (statusTranasksi == 1)
+                      ? "Belum lunas"
+                      : (statusTranasksi == 2)
+                          ? "Menunggu Verifikasi"
+                          : "Lunas",
                   style: (statusTranasksi == 1)
                       ? orangeTextStyleMontserrat
-                      : blackTextStyleMontserrat.copyWith(
-                          fontSize: 16,
-                          fontWeight: semiBold,
-                        ),
+                      : (statusTranasksi == 3)
+                          ? greenTextStyleMontserrat
+                          : orangeTextStyleMontserrat.copyWith(
+                              fontSize: 14,
+                            ),
                 ),
               ),
             ],

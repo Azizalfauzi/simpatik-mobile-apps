@@ -56,7 +56,7 @@ class _TransactionOngoingPageState extends State<TransactionOngoingPage> {
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
                         var dataTransaction = state.result[index];
-                        if (dataTransaction.statusTransaksi != 1) {
+                        if (dataTransaction.statusTransaksi == 3) {
                           return const SizedBox();
                         } else {
                           return Padding(

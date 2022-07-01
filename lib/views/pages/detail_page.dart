@@ -190,6 +190,7 @@ class _DetailPageState extends State<DetailPage> {
               fontWeight: bold,
             ),
           ),
+          const SizedBox(height: 20),
           SizedBox(
             height: 80,
             width: double.infinity,
@@ -199,21 +200,26 @@ class _DetailPageState extends State<DetailPage> {
                 Row(
                   children: mockFasilitas
                       .map(
-                        (e) => const Padding(
-                          padding: EdgeInsets.fromLTRB(
+                        (e) => Padding(
+                          padding: const EdgeInsets.fromLTRB(
                             10,
                             0,
                             defaultMargin - 10,
                             0,
                           ),
-                          child: CustomCardFasilitas(),
+                          child: CustomCardFasilitas(
+                            img: e.image,
+                            title: e.name,
+                          ),
                         ),
                       )
                       .toList(),
                 )
               ],
             ),
-          )
+          ),
+
+          const SizedBox(height: 20),
         ],
       ),
     );
