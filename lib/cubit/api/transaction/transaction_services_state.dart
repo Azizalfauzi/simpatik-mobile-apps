@@ -39,7 +39,7 @@ class TransactionServicesGetFailed extends TransactionServicesState {
 }
 
 class TransactionServicesGetDetailSuccess extends TransactionServicesState {
-  final TranasksiDetailData result;
+  final TransaksiDetailData result;
   const TransactionServicesGetDetailSuccess(this.result);
   @override
   List<Object> get props => [result];

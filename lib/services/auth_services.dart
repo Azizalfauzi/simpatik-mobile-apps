@@ -83,5 +83,6 @@ class AuthServices {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('id'); 
     preferences.remove('name'); 
+    preferences.remove('email'); 
   }
 }

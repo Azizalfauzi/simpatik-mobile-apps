@@ -54,15 +54,17 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         var dataTransaction = state.result[index];
-                        if (dataTransaction.statusTransaksi != 2) {
+                        if (dataTransaction.statusTransaksi != 3) {
                           return const SizedBox();
                         } else {
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(
                                 defaultMargin, 0, defaultMargin, defaultMargin),
                             child: GestureDetector(
-                              onTap: (){
-                                
+                              onTap: () {
+                                context.read<RoutesCubit>().emit(
+                                    RoutesMyTicketStatusScreen(
+                                        dataTransaction.id));
                               },
                               child: CustomCardOnGoing(
                                 id: dataTransaction.id,
@@ -70,7 +72,8 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                 location: dataTransaction.wisataName,
                                 image: "",
                                 rate: dataTransaction.id,
-                                statusTranasksi: dataTransaction.statusTransaksi,
+                                statusTranasksi:
+                                    dataTransaction.statusTransaksi,
                               ),
                             ),
                           );

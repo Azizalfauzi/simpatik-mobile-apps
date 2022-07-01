@@ -1,7 +1,7 @@
 part of 'models.dart';
 
-class TranasksiDetailData {
-  TranasksiDetailData({
+class TransaksiDetailData {
+  TransaksiDetailData({
     required this.id,
     required this.idBank,
     required this.idWisata,
@@ -15,6 +15,10 @@ class TranasksiDetailData {
     required this.statusTransaksi,
     required this.createdAt,
     required this.updatedAt,
+    required this.wisataName,
+    required this.bankNumber,
+    required this.bankName,
+    required this.bankUserName,
   });
 
   int id;
@@ -30,9 +34,13 @@ class TranasksiDetailData {
   int statusTransaksi;
   DateTime createdAt;
   DateTime updatedAt;
+  String wisataName;
+  String bankNumber;
+  String bankName;
+  String bankUserName;
 
-  factory TranasksiDetailData.fromJson(Map<String, dynamic> json) =>
-      TranasksiDetailData(
+  factory TransaksiDetailData.fromJson(Map<String, dynamic> json) =>
+      TransaksiDetailData(
         id: json["id"],
         idBank: json["id_bank"],
         idWisata: json["id_wisata"],
@@ -46,5 +54,9 @@ class TranasksiDetailData {
         statusTransaksi: json["status_transaksi"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        wisataName: json["wisata_name"],
+        bankNumber: json["bank_number"],
+        bankName: json["bank_name"],
+        bankUserName: json["bank_user_name"],
       );
 }

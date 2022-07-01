@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpatik_mobile_apps/cubit/api/transaction/transaction_services_cubit.dart';
 import 'package:simpatik_mobile_apps/cubit/api/wisata/wisata_cubit.dart';
@@ -15,7 +17,11 @@ import 'package:intl/intl.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../cubit/api/auth/auth_services_cubit.dart';
+import '../../cubit/api/update_transaksi/update_transaksi_cubit.dart';
 import '../../cubit/counter/counter_cubit.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 
 part 'login_page.dart';

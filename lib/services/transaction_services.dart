@@ -48,6 +48,54 @@ class TransactionServices {
     }
   }
 
+  static Future<int> updateTransaksi(
+    int idTransaksi,
+    int idBank,
+    int idWisata,
+    String namaPelanggan,
+    String emailPelanggan,
+    String noHpPelanggan,
+    int statusTransaksi,
+    int jumlahTiket,
+    int totalHarga,
+    String buktiBayar,
+    String tanggalPesan,
+  ) async {
+    String apiURL = urlSimpatik + "transaksi/" + idTransaksi.toString();
+
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    };
+
+    var body = json.encode({
+      "id_bank": idBank,
+      "id_wisata": idWisata,
+      "nama_pelanggan": namaPelanggan,
+      "email_pelanggan": emailPelanggan,
+      "nohp_pelanggan": noHpPelanggan,
+      "status_transaksi": statusTransaksi,
+      "jumlah_tiket": jumlahTiket,
+      "total_harga": totalHarga,
+      "bukti_bayar": buktiBayar,
+      "tanggal_pesan": tanggalPesan,
+    });
+
+    var response = await http.post(
+      Uri.parse(apiURL),
+      headers: headers,
+      body: body,
+    );
+    // print(response.body);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      return data['code'];
+    } else {
+      return throw Exception('Gagal melakukan update transaksi!');
+    }
+  }
+
   static Future<List<StatusTransaksiModel>> getDataTransaksi() async {
     try {
       final reponse = await Dio().get(urlSimpatik + 'transaksi');
@@ -70,14 +118,14 @@ class TransactionServices {
     }
   }
 
-  static Future<TranasksiDetailData> getDetailTranasksi(int id) async {
+  static Future<TransaksiDetailData> getDetailTranasksi(int id) async {
     try {
       final reponse =
           await Dio().get(urlSimpatik + 'transaksi/' + id.toString());
       final json = reponse.data;
       print(json);
       if (reponse.statusCode == 200) {
-        TranasksiDetailData result = TranasksiDetailData.fromJson(json['data']);
+        TransaksiDetailData result = TransaksiDetailData.fromJson(json['data']);
         print(result);
         return result;
       } else if (reponse.statusCode == 404) {

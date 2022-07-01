@@ -48,6 +48,10 @@ dev_dependencies:
   introduction_screen: ^3.0.2
   shared_preferences: ^2.0.15
   flutter_launcher_icons: ^0.9.3
+  qr_flutter: ^4.0.0
+  image_picker: ^0.8.4+4
+  dotted_border: ^2.0.0+2
+
   
 flutter_icons:
   android: true

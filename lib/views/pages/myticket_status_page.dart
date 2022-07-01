@@ -12,7 +12,15 @@ class MyTicketStatusPage extends StatefulWidget {
 }
 
 class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
-  Widget header() {
+  @override
+  void initState() {
+    context.read<TransactionServicesCubit>().getDataDetailTranaksi(widget.id);
+    return super.initState();
+  }
+
+  Widget header(
+    String name,
+  ) {
     return Column(
       children: [
         // header back and title
@@ -54,10 +62,16 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
             right: defaultMargin,
           ),
           width: double.infinity,
-          height: 320,
+          height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: Colors.grey,
+          ),
+          child: Center(
+            child: QrImage(
+              data:
+                  "https://flutter.dev/?gclid=CjwKCAjwk_WVBhBZEiwAUHQCmYc9zFHASSrHqhy_PZ8gDHFPF0WNH8DMeT0ZQFIN0S9_clsxdyLxYxoCjG8QAvD_BwE&gclsrc=aw.ds",
+              size: 200,
+            ),
           ),
         ),
         // header text
@@ -74,7 +88,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Farm House Lembang",
+                      name,
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                         fontSize: 16,
@@ -102,7 +116,8 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
     );
   }
 
-  Widget content() {
+  Widget content(
+      String name, String tanggalPesanan, int jumlahTiket, int statusTiket) {
     return Padding(
       padding: const EdgeInsets.only(
         left: defaultMargin,
@@ -127,7 +142,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
                     height: 5,
                   ),
                   Text(
-                    "Aziz Alfauzi",
+                    name,
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: light,
                     ),
@@ -146,7 +161,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
                     height: 5,
                   ),
                   Text(
-                    "20 Mei 2022",
+                    tanggalPesanan,
                     style: blackTextStyleMontserrat.copyWith(
                       fontWeight: light,
                     ),
@@ -175,7 +190,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
                       height: 5,
                     ),
                     Text(
-                      "6",
+                      jumlahTiket.toString(),
                       style: blackTextStyleMontserrat.copyWith(
                         fontWeight: light,
                       ),
@@ -196,7 +211,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
                       height: 5,
                     ),
                     Text(
-                      "Menunggu diverifikasi",
+                      (statusTiket != 3) ? "" : "Lunas",
                       style: orangeTextStyleMontserrat.copyWith(
                         fontWeight: light,
                       ),
@@ -223,7 +238,7 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
         top: 40,
       ),
       child: CustomButton(
-        title: "Menunggu Verifikasi",
+        title: "Lunas",
         onTap: () {
           // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
           context.read<RoutesCubit>().emit(const RoutesMainPage(1));
@@ -242,12 +257,28 @@ class _MyTicketStatusPageState extends State<MyTicketStatusPage> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                header(),
-                content(),
-                footer(),
-              ],
+            child:
+                BlocBuilder<TransactionServicesCubit, TransactionServicesState>(
+              builder: (context, state) {
+                if (state is TransactionServicesGetDetailSuccess) {
+                  return Column(
+                    children: [
+                      header(state.result.wisataName),
+                      content(
+                        state.result.namaPelanggan,
+                        state.result.tanggalPesan,
+                        state.result.jumlahTiket,
+                        state.result.statusTransaksi,
+                      ),
+                      footer(),
+                    ],
+                  );
+                } else if (state is TransactionServicesGetDetailFailed) {
+                  return const SizedBox();
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           ),
         ),

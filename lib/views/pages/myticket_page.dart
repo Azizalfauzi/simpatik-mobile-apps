@@ -13,11 +13,43 @@ class MyTicketPage extends StatefulWidget {
 }
 
 class _MyTicketPageState extends State<MyTicketPage> {
+  bool isUpload = false;
+  String fileName = '';
+  File? _image;
+  File? getFile;
+  String? namaFile;
+  int idWisata = 0;
+  int jumlahTiket = 0;
+  int totalBayar = 0;
+  String tanggalPesanan = '';
+
+  Future pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final imageName = File(image!.name);
+
+    this.namaFile = imageName.toString();
+    try {
+      // final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      // ignore: unnecessary_null_comparison
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() {
+        _image = imageTemp;
+      });
+      // ignore: nullable_type_in_catch_clause
+    } on PlatformException catch (e) {
+      print('Failed cause: $e');
+    }
+  }
+
   @override
-  void initState(){
+  void initState() {
     context.read<TransactionServicesCubit>().getDataDetailTranaksi(widget.id);
     return super.initState();
   }
+
   Widget header(
     String image,
     String namelokasi,
@@ -211,7 +243,11 @@ class _MyTicketPageState extends State<MyTicketPage> {
                       height: 5,
                     ),
                     Text(
-                      (statusTiket != 1) ? "Lunas" : "Belum Lunas",
+                      (statusTiket == 1)
+                          ? "Belum Lunas"
+                          : (statusTiket == 2)
+                              ? "Sedang diverifikasi"
+                              : "Belum Lunas",
                       style: orangeTextStyleMontserrat.copyWith(
                         fontWeight: bold,
                       ),
@@ -328,68 +364,231 @@ class _MyTicketPageState extends State<MyTicketPage> {
     );
   }
 
-  Widget footer() {
+  Widget footer(int statusTiket) {
     return Padding(
       padding: const EdgeInsets.only(
         left: defaultMargin,
         right: defaultMargin,
         top: 10,
       ),
-      child: Row(
+      child: Column(
         children: [
-          Container(
-            height: MyUtility(context).height / 16,
-            width: 220,
-            padding: EdgeInsets.all(MyUtility(context).width / 40),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.black12)),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Pilih Bukti bayar .img/.pdf",
-                errorStyle:
-                    const TextStyle(height: 0.5, fontStyle: FontStyle.italic),
-                hintStyle: greyTextStyleMontserrat.copyWith(
-                    fontSize: 12,
-                    fontWeight: regular,
-                    fontStyle: FontStyle.italic),
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: SizedBox(
-              height: MyUtility(context).height / 16,
-              child: ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<RoutesCubit>()
-                      .emit(RoutesMyTicketStatusScreen(widget.id));
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(kPrimaryColor),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide.none,
+          Row(
+            children: [
+              SizedBox(
+                height: 55,
+                width: 220,
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: kSecondaryGreyColor,
+                  radius: const Radius.circular(5),
+                  strokeWidth: 1,
+                  dashPattern: [8, 4],
+                  child: Center(
+                    child: SizedBox(
+                      width: MyUtility(context).width / 2.5,
+                      child: Text(
+                        (statusTiket != 1)
+                            ? "Dalam proses verifikasi"
+                            : (_image == null)
+                                ? "Unggah bukti bayar"
+                                : fileName = _image!.path.split('/').last,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: greyTextStyleMontserrat.copyWith(
+                            fontSize: 12,
+                            fontWeight: regular,
+                            fontStyle: FontStyle.italic),
+                      ),
                     ),
                   ),
                 ),
-                child: Text(
-                  "Unggah Bukti bayar",
-                  textAlign: TextAlign.center,
-                  style: whiteTextStyleMontserrat.copyWith(
-                    fontWeight: medium,
-                    fontSize: 14,
-                  ),
-                ),
               ),
-            ),
-          )
+              const SizedBox(
+                width: 10,
+              ),
+              (statusTiket != 1)
+                  ? Expanded(
+                      child: SizedBox(
+                        height: MyUtility(context).height / 16,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(kSecondaryGreyColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            "Pilih Bukti bayar",
+                            textAlign: TextAlign.center,
+                            style: whiteTextStyleMontserrat.copyWith(
+                              fontWeight: medium,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: SizedBox(
+                        height: MyUtility(context).height / 16,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            pickImage();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(kPrimaryColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            "Pilih Bukti bayar",
+                            textAlign: TextAlign.center,
+                            style: whiteTextStyleMontserrat.copyWith(
+                              fontWeight: medium,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          (_image == null)
+              ? SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(kSecondaryGreyColor),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          side: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      "Unggah Bukti Bayar",
+                      style: whiteTextStyleMontserrat.copyWith(
+                        fontWeight: medium,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                )
+              : (statusTiket == 2)
+                  ? SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(kPrimaryColor),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          "Menunggu Verifikasi",
+                          style: whiteTextStyleMontserrat.copyWith(
+                            fontWeight: medium,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    )
+                  : BlocConsumer<UpdateTransaksiCubit, UpdateTransaksiState>(
+                      listener: (context, state) {
+                        if (state is UpdateTransaksiSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                  "Berhasil unggah bukti bayar\nSilahkan menunggu proses verifikasi"),
+                            ),
+                          );
+                          context
+                              .read<RoutesCubit>()
+                              .emit(const RoutesMainPage(1));
+                        } else if (state is UpdateTransaksiFailed) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text("Gagal unggah bukti bayar!"),
+                            ),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is UpdateTransaksiLoading) {
+                          return const Center(
+                            child: SpinKitFadingCircle(
+                              color: kPrimaryColor,
+                              size: 50,
+                            ),
+                          );
+                        }
+                        return CustomButton(
+                          title: "Unggah Bukti Bayar",
+                          onTap: () async {
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            String? name = preferences.getString('name');
+                            String? email = preferences.getString('email');
+                            // print("id wisata :" + idWisata.toString());
+                            // print("name pelanggan" + name!);
+                            // print("email pelanggan" + email!);
+                            // print("no hp pelanggan : 082222");
+                            // print("status_transaksi : 1");
+                            // print("jumlah tiket" + jumlahTiket.toString());
+                            // print("total bayar" + totalBayar.toString());
+                            // print("bukti bayar :" + fileName);
+                            // print("date " + tanggalPesanan);
+                            context
+                                .read<UpdateTransaksiCubit>()
+                                .updateTransaction(
+                                  widget.id,
+                                  1,
+                                  idWisata,
+                                  name!,
+                                  email!,
+                                  "085332",
+                                  2,
+                                  jumlahTiket,
+                                  totalBayar,
+                                  fileName,
+                                  tanggalPesanan,
+                                );
+                          },
+                        );
+                      },
+                    ),
+          const SizedBox(
+            height: 50,
+          ),
         ],
       ),
     );
@@ -409,11 +608,15 @@ class _MyTicketPageState extends State<MyTicketPage> {
                 BlocBuilder<TransactionServicesCubit, TransactionServicesState>(
               builder: (context, state) {
                 if (state is TransactionServicesGetDetailSuccess) {
+                  idWisata = state.result.idWisata;
+                  jumlahTiket = state.result.jumlahTiket;
+                  totalBayar = int.parse(state.result.totalHarga);
+                  tanggalPesanan = state.result.tanggalPesan;
                   return Column(
                     children: [
                       header(
                         state.result.buktiBayar,
-                        state.result.namaPelanggan,
+                        state.result.wisataName,
                       ),
                       content(
                         state.result.namaPelanggan,
@@ -422,7 +625,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                         state.result.statusTransaksi,
                         int.parse(state.result.totalHarga),
                       ),
-                      footer(),
+                      footer(state.result.statusTransaksi),
                     ],
                   );
                 } else {
