@@ -8,10 +8,10 @@ part 'auth_services_state.dart';
 
 class AuthServicesCubit extends Cubit<AuthServicesState> {
   AuthServicesCubit() : super(AuthServicesInitial());
-  void loginApp(String username, String password) async {
+  void loginApp(String email, String password) async {
     try {
       emit(AuthServicesLoading());
-      LoginModel result = await AuthServices.loginApp(username, password);
+      LoginModel result = await AuthServices.loginApp(email, password);
       emit(AuthServicesLoginSuccess(result));
     } catch (e) {
       emit(AuthServicesLoginFailed(e.toString()));
@@ -23,14 +23,20 @@ class AuthServicesCubit extends Cubit<AuthServicesState> {
     String password,
     String confirmPassword,
     String email,
+    String name,
+    String alamat,
+    String noTelp,
   ) async {
     try {
       emit(AuthServicesLoading());
-      RegitserModel result = await AuthServices.registerApp(
+      RegisterModel result = await AuthServices.registerApp(
         username,
         password,
         confirmPassword,
         email,
+        name,
+        alamat,
+        noTelp,
       );
       emit(AuthServicesRegisterSuccess(result));
     } catch (e) {

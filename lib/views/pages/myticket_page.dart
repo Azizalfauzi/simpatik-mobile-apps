@@ -582,7 +582,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                                   name!,
                                   email!,
                                   "085332",
-                                  2,
+                                  3,
                                   jumlahTiket,
                                   totalBayar,
                                   dataFile,

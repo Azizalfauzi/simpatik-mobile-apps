@@ -8,3 +8,4 @@ part 'auth_services.dart';
 part 'transaction_services.dart';
 part 'url_services.dart';
 part 'tempat_wisata_services.dart';
+part 'user_services.dart';

@@ -1,11 +1,14 @@
 part of 'services.dart';
 
 class AuthServices {
-  static Future<RegitserModel> registerApp(
+  static Future<RegisterModel> registerApp(
     String username,
     String password,
     String confirmPassword,
     String email,
+    String name,
+    String alamat,
+    String notelp,
   ) async {
     try {
       String apiURL = urlSimpatik + "register";
@@ -20,6 +23,9 @@ class AuthServices {
         "password": password,
         "conPassword": confirmPassword,
         "email": email,
+        "name": name,
+        "alamat": alamat,
+        "notelp": notelp,
       });
 
       var response = await http.post(
@@ -27,10 +33,9 @@ class AuthServices {
         headers: headers,
         body: body,
       );
-      print(response.body);
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-        RegitserModel result = RegitserModel.fromJson(data);
+        RegisterModel result = RegisterModel.fromJson(data);
         return result; // you can mapping json object also here
       } else {
         return throw Exception('Gagal melakukan registrasi!');
@@ -41,7 +46,7 @@ class AuthServices {
   }
 
   static Future<LoginModel> loginApp(
-    String username,
+    String email,
     String password,
   ) async {
     try {
@@ -53,7 +58,7 @@ class AuthServices {
       };
 
       var body = json.encode({
-        "username": username,
+        "email": email,
         "password": password,
       });
 
@@ -81,8 +86,8 @@ class AuthServices {
 
   static Future<void> signOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove('id'); 
-    preferences.remove('name'); 
-    preferences.remove('email'); 
+    preferences.remove('id');
+    preferences.remove('name');
+    preferences.remove('email');
   }
 }

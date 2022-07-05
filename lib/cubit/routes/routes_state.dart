@@ -25,6 +25,10 @@ class RoutesRegisterScreen extends RoutesState {
   @override
   List<Object> get props => [];
 }
+class RoutesForgotPasswordScreen extends RoutesState {
+  @override
+  List<Object> get props => [];
+}
 
 class RoutesMainPage extends RoutesState {
   final int initial;

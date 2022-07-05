@@ -104,11 +104,11 @@ class CustomCardOnGoing extends StatelessWidget {
                   (statusTranasksi == 1)
                       ? "Belum lunas"
                       : (statusTranasksi == 2)
-                          ? " Lunas"
+                          ? " Diverifikasi"
                           : "Lunas",
                   style: (statusTranasksi == 1)
                       ? orangeTextStyleMontserrat
-                      : (statusTranasksi == 2)
+                      : (statusTranasksi == 3)
                           ? greenTextStyleMontserrat
                           : orangeTextStyleMontserrat.copyWith(
                               fontSize: 14,

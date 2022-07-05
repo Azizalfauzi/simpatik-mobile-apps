@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  String username = '';
+  String email = '';
   String password = '';
   @override
   Widget build(BuildContext context) {
@@ -71,8 +71,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // melakukan pergantian pada email untuk login
                   Text(
-                    "username",
+                    "Email",
                     style: greyTextStyleMontserrat,
                   ),
                   const SizedBox(
@@ -89,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Masukan username anda",
+                        hintText: "Masukan email anda",
                         errorStyle: const TextStyle(
                             height: 0.5, fontStyle: FontStyle.italic),
                         hintStyle: greyTextStyleMontserrat.copyWith(
@@ -99,13 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onSaved: (String? value) {
                         setState(() {
-                          username = value!;
+                          email = value!;
                         });
-                      },
-                      validator: (String? value) {
-                        return (value != null && value.contains('@'))
-                            ? 'Do not use the @ char.'
-                            : null;
                       },
                     ),
                   ),
@@ -177,10 +173,17 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  "Klik disini",
-                  style: orangeTextStyleMontserrat.copyWith(
-                      fontWeight: bold, fontSize: 12),
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<RoutesCubit>()
+                        .emit(RoutesForgotPasswordScreen());
+                  },
+                  child: Text(
+                    "Klik disini",
+                    style: orangeTextStyleMontserrat.copyWith(
+                        fontWeight: bold, fontSize: 12),
+                  ),
                 ),
               ],
             ),
@@ -234,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       context
                           .read<AuthServicesCubit>()
-                          .loginApp(username, password);
+                          .loginApp(email, password);
                     }
                     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
                   },

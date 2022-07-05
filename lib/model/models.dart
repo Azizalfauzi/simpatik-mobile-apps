@@ -9,3 +9,4 @@ part 'tempat_wisata_model.dart';
 part 'transaksi_model.dart';
 part 'status_transaksi_model.dart';
 part 'transaksi_detail_model.dart';
+part 'user_get_model.dart';

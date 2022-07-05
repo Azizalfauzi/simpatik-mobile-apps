@@ -69,7 +69,10 @@ class _WrapperPageState extends State<WrapperPage> {
                                                   price: pageState.price,
                                                   rate: pageState.rate,
                                                 )
-                                              : const SplashScreenPageGlobal(),
+                                              : (pageState
+                                                      is RoutesForgotPasswordScreen)
+                                                  ? const ForgotPasswordPage()
+                                                  : const SplashScreenPageGlobal(),
     );
   }
 }

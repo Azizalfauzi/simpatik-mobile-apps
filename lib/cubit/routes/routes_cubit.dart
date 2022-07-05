@@ -85,6 +85,8 @@ class RoutesCubit extends Cubit<RoutesState> {
         price,
         rating,
       ));
+    } else if (state is RoutesForgotPasswordScreen) {
+      emit(RoutesForgotPasswordScreen());
     } else {
       emit(RoutesLoginScreen());
     }

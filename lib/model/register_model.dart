@@ -1,7 +1,7 @@
 part of 'models.dart';
 
-class RegitserModel {
-  RegitserModel({
+class RegisterModel {
+  RegisterModel({
     required this.code,
     required this.message,
     required this.data,
@@ -9,36 +9,44 @@ class RegitserModel {
 
   int code;
   String message;
-  DataRegister data;
+  Data data;
 
-  factory RegitserModel.fromJson(Map<String, dynamic> json) => RegitserModel(
+  factory RegisterModel.fromJson(Map<String, dynamic> json) => RegisterModel(
         code: json["code"],
         message: json["message"],
-        data: DataRegister.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
 }
 
-class DataRegister {
-  DataRegister({
-   required this.username,
-   required this.email,
-   required this.updatedAt,
-   required this.createdAt,
-   required this.id,
+class Data {
+  Data({
+    required this.username,
+    required this.email,
+    required this.name,
+    required this.alamat,
+    required this.notelp,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.id,
   });
 
   String username;
   String email;
+  String name;
+  String alamat;
+  String notelp;
   DateTime updatedAt;
   DateTime createdAt;
   int id;
 
-  factory DataRegister.fromJson(Map<String, dynamic> json) => DataRegister(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         username: json["username"],
         email: json["email"],
+        name: json["name"],
+        alamat: json["alamat"],
+        notelp: json["notelp"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
         id: json["id"],
       );
-
 }
