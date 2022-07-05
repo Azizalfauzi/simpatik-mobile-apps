@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +24,9 @@ import '../../cubit/counter/counter_cubit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:collection';
+import 'package:flutter/foundation.dart';
 
 
 part 'login_page.dart';
@@ -40,3 +44,4 @@ part 'order_ticket_page.dart';
 part 'transaction_history_page.dart';
 part 'transaction_ongoing_page.dart';
 part 'myticket_status_page.dart';
+part 'peta_lokasi_page.dart';

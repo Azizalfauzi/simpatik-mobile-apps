@@ -66,6 +66,7 @@ class _TransactionOngoingPageState extends State<TransactionOngoingPage> {
                               onTap: () {
                                 context.read<RoutesCubit>().emit(
                                     RoutesMyTicketScreen(dataTransaction.id));
+                                    
                               },
                               child: CustomCardOnGoing(
                                 id: dataTransaction.id,

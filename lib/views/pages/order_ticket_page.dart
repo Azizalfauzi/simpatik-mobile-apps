@@ -24,6 +24,10 @@ class OrderTicketPage extends StatefulWidget {
 }
 
 class _OrderTicketPageState extends State<OrderTicketPage> {
+  Uint8List convertBase64Image(String base64String) {
+    return const Base64Decoder().convert(base64String.split(',').last);
+  }
+
   DateTime? date;
   @override
   void initState() {
@@ -42,6 +46,8 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
               child: IconButton(
                 onPressed: () {
                   context.read<RoutesCubit>().emit(RoutesDetailScreen(
+                        "",
+                        "",
                         widget.idWisata,
                         widget.image,
                         widget.name,
@@ -82,13 +88,14 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
           ),
           width: double.infinity,
           height: 320,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              image: NetworkImage(
+          child: SizedBox(
+            width: 180,
+            height: 200,
+            child: Image.memory(
+              convertBase64Image(
                 widget.image,
               ),
-              fit: BoxFit.cover,
+              gaplessPlayback: true,
             ),
           ),
         ),
@@ -498,6 +505,8 @@ class _OrderTicketPageState extends State<OrderTicketPage> {
     return WillPopScope(
       onWillPop: () async {
         context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              "",
+              "",
               widget.idWisata,
               widget.image,
               widget.name,

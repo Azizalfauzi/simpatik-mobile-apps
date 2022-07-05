@@ -1,6 +1,8 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
+  final String longitude;
+  final String latitude;
   final int idWisata;
   final String image;
   final String name;
@@ -10,6 +12,8 @@ class DetailPage extends StatefulWidget {
   final double rate;
   const DetailPage({
     Key? key,
+    required this.longitude,
+    required this.latitude,
     required this.idWisata,
     required this.image,
     required this.name,
@@ -24,6 +28,10 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  Uint8List convertBase64Image(String base64String) {
+    return const Base64Decoder().convert(base64String.split(',').last);
+  }
+
   Widget header() {
     return Column(
       children: [
@@ -67,13 +75,14 @@ class _DetailPageState extends State<DetailPage> {
           ),
           width: double.infinity,
           height: 320,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              image: NetworkImage(
+          child: SizedBox(
+            width: 180,
+            height: 200,
+            child: Image.memory(
+              convertBase64Image(
                 widget.image,
               ),
-              fit: BoxFit.cover,
+              gaplessPlayback: true,
             ),
           ),
         ),
@@ -218,8 +227,47 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
           ),
-
-          const SizedBox(height: 20),
+          const SizedBox(
+            height: 10,
+          ),
+          // title deskripsi
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Lihat Peta Lokasi",
+                style: blackTextStyleMontserrat.copyWith(
+                  fontSize: 16,
+                  fontWeight: bold,
+                ),
+              ),
+              IconButton(
+                iconSize: 40,
+                onPressed: () {
+                  context.read<RoutesCubit>().emit(
+                        RoutesPetaLokasiScreen(
+                          double.parse(widget.longitude),
+                          double.parse(widget.latitude),
+                          widget.idWisata,
+                          widget.image,
+                          widget.name,
+                          widget.location,
+                          widget.deskripsi,
+                          widget.price,
+                          widget.rate,
+                        ),
+                      );
+                },
+                icon: const Icon(
+                  Icons.arrow_circle_right,
+                  color: kPrimaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

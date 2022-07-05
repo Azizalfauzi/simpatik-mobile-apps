@@ -50,6 +50,7 @@ dev_dependencies:
   qr_flutter: ^4.0.0
   image_picker: ^0.8.4+4
   dotted_border: ^2.0.0+2
+  google_maps_flutter: ^2.1.8
 
 
 # For information on the generic Dart part of this file, see the

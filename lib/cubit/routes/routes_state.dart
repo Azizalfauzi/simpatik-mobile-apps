@@ -34,6 +34,8 @@ class RoutesMainPage extends RoutesState {
 }
 
 class RoutesDetailScreen extends RoutesState {
+  final String longitude;
+  final String latitude;
   final int idWisata;
   final String image;
   final String name;
@@ -42,6 +44,8 @@ class RoutesDetailScreen extends RoutesState {
   final int price;
   final double rate;
   const RoutesDetailScreen(
+    this.longitude,
+    this.latitude,
     this.idWisata,
     this.image,
     this.name,
@@ -104,4 +108,32 @@ class RoutesMyTicketStatusScreen extends RoutesState {
   const RoutesMyTicketStatusScreen(this.id);
   @override
   List<Object> get props => [id];
+}
+
+class RoutesPetaLokasiScreen extends RoutesState {
+  final double longitude;
+  final double latitude;
+  final int idWisata;
+  final String image;
+  final String name;
+  final String location;
+  final String deskripsi;
+  final int price;
+  final double rate;
+  const RoutesPetaLokasiScreen(
+    this.longitude,
+    this.latitude,
+    this.idWisata,
+    this.image,
+    this.name,
+    this.location,
+    this.deskripsi,
+    this.price,
+    this.rate,
+  );
+  @override
+  List<Object> get props => [
+        longitude,
+        latitude,
+      ];
 }

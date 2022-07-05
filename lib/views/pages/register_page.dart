@@ -384,10 +384,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       // print("password :" + password);
                       // print("confirmPassword :" + confirmPassword);
                       context.read<AuthServicesCubit>().registerApp(
-                            email,
+                            username,
                             password,
                             confirmPassword,
-                            username,
+                            email,
                           );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

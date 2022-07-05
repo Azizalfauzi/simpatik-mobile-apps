@@ -20,7 +20,6 @@ class CustomCardOnGoing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 30),
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
         vertical: 30,
@@ -105,11 +104,11 @@ class CustomCardOnGoing extends StatelessWidget {
                   (statusTranasksi == 1)
                       ? "Belum lunas"
                       : (statusTranasksi == 2)
-                          ? "Menunggu Verifikasi"
+                          ? " Lunas"
                           : "Lunas",
                   style: (statusTranasksi == 1)
                       ? orangeTextStyleMontserrat
-                      : (statusTranasksi == 3)
+                      : (statusTranasksi == 2)
                           ? greenTextStyleMontserrat
                           : orangeTextStyleMontserrat.copyWith(
                               fontSize: 14,

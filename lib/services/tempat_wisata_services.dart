@@ -6,7 +6,7 @@ class TempatWisataServices {
      
       final reponse = await Dio().get(urlSimpatik + 'tempat-wisata');
       final json = reponse.data;
-
+      print(json);
       if (reponse.statusCode == 200) {
         List<WisataModel> result = (json['data'] as Iterable)
             .map((e) => WisataModel.fromJson(e))
