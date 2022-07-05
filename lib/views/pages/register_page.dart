@@ -11,6 +11,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   // data form
   String username = '';
+  String notelp = '';
+  String name = '';
+  String alamat = '';
   String email = '';
   String password = '';
   String confirmPassword = '';
@@ -145,6 +148,90 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 15,
                 ),
+                // penambahan name
+                Text(
+                  "Name",
+                  style: greyTextStyleMontserrat,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: MyUtility(context).height / 16,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(MyUtility(context).width / 40),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.black12)),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Masukan nama anda",
+                      errorStyle: const TextStyle(
+                          height: 0.5, fontStyle: FontStyle.italic),
+                      hintStyle: greyTextStyleMontserrat.copyWith(
+                          fontSize: 12,
+                          fontWeight: regular,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    onSaved: (String? value) {
+                      name = value!;
+                    },
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "No Telepon",
+                  style: greyTextStyleMontserrat,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: MyUtility(context).height / 16,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(MyUtility(context).width / 40),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.black12)),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Masukan notelp anda",
+                      errorStyle: const TextStyle(
+                          height: 0.5, fontStyle: FontStyle.italic),
+                      hintStyle: greyTextStyleMontserrat.copyWith(
+                          fontSize: 12,
+                          fontWeight: regular,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    onSaved: (String? value) {
+                      notelp = value!;
+                    },
+                    validator: (value) {
+                      if (value == "") {
+                        return "Input tidak boleh kosong";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
                 Text(
                   "Email",
                   style: greyTextStyleMontserrat,
@@ -186,6 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 15,
                 ),
+                // penambahan alamat
                 Text(
                   "Alamat",
                   style: greyTextStyleMontserrat,
@@ -215,7 +303,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           fontWeight: regular,
                           fontStyle: FontStyle.italic),
                     ),
-                    onSaved: (String? value) {},
+                    onSaved: (String? value) {
+                      alamat = value!;
+                    },
                     validator: (String? value) {
                       return (value != null && value.contains('@'))
                           ? 'Do not use the @ char.'
@@ -355,7 +445,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 );
                 context.read<RoutesCubit>().emit(RoutesLoginScreen());
-              } else if(state is AuthServicesRegisterFailed) {
+              } else if (state is AuthServicesRegisterFailed) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     backgroundColor: Colors.red,
@@ -379,15 +469,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     if (password == confirmPassword) {
-                      // print("email :" + email);
-                      // print("username :" + username);
-                      // print("password :" + password);
-                      // print("confirmPassword :" + confirmPassword);
+                      print("username :" + username);
+                      print("password :" + password);
+                      print("confirmPassword :" + confirmPassword);
+                      print("email :" + email);
+                      print("name"+name);
+                      print("alamat"+alamat);
+                      print("notelp"+notelp);
+                      // penambahan name dan alamat
                       context.read<AuthServicesCubit>().registerApp(
                             username,
                             password,
                             confirmPassword,
                             email,
+                            name,
+                            alamat,
+                            notelp,
                           );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

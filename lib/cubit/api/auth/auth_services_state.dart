@@ -25,7 +25,7 @@ class AuthServicesLoginFailed extends AuthServicesState {
 }
 
 class AuthServicesRegisterSuccess extends AuthServicesState {
-  final RegitserModel result;
+  final RegisterModel result;
   const AuthServicesRegisterSuccess(this.result);
   @override
   List<Object> get props => [result];
