@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SizedBox(
-          height: 350,
+          height: 400,
           width: double.infinity,
           child: BlocBuilder<WisataCubit, WisataState>(
             builder: (context, state) {
@@ -136,11 +136,13 @@ class _HomePageState extends State<HomePage> {
                                 0,
                               ),
                               child: CustomCardPopular(
+                                longitude: e.longitude,
+                                latitude: e.latitude,
                                 idWisata: e.id,
                                 image: e.wisataImage,
                                 name: e.wisataName,
-                                location: e.wisataName,
-                                dekripsi: e.wisataName,
+                                location: e.wisataLocation,
+                                dekripsi: e.wisataDescription,
                                 price: int.parse(e.tiketPrice),
                                 rating: double.parse(e.wisataRating),
                               ),

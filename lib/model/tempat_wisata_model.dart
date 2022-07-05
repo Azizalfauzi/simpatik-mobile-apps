@@ -8,6 +8,8 @@ class WisataModel {
     required this.wisataRating,
     required this.wisataDescription,
     required this.wisataLocation,
+    required this.latitude,
+    required this.longitude,
     required this.wisataImage,
     required this.status,
     required this.createdAt,
@@ -18,8 +20,10 @@ class WisataModel {
   String wisataName;
   String tiketPrice;
   String wisataRating;
-  dynamic wisataDescription;
-  dynamic wisataLocation;
+  String wisataDescription;
+  String wisataLocation;
+  String latitude;
+  String longitude;
   String wisataImage;
   bool status;
   DateTime createdAt;
@@ -32,9 +36,26 @@ class WisataModel {
         wisataRating: json["wisata_rating"],
         wisataDescription: json["wisata_description"],
         wisataLocation: json["wisata_location"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         wisataImage: json["wisata_image"],
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "wisata_name": wisataName,
+        "tiket_price": tiketPrice,
+        "wisata_rating": wisataRating,
+        "wisata_description": wisataDescription,
+        "wisata_location": wisataLocation,
+        "latitude": latitude,
+        "longitude": longitude,
+        "wisata_image": wisataImage,
+        "status": status,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

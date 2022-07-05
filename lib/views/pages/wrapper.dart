@@ -25,6 +25,8 @@ class _WrapperPageState extends State<WrapperPage> {
                             )
                           : (pageState is RoutesDetailScreen)
                               ? DetailPage(
+                                  longitude: pageState.longitude,
+                                  latitude: pageState.latitude,
                                   idWisata: pageState.idWisata,
                                   image: pageState.image,
                                   name: pageState.name,
@@ -52,7 +54,22 @@ class _WrapperPageState extends State<WrapperPage> {
                                           ? MyTicketStatusPage(
                                               id: pageState.id,
                                             )
-                                          : const SplashScreenPageGlobal(),
+                                          : (pageState
+                                                  is RoutesPetaLokasiScreen)
+                                              ? PetaLokasiPage(
+                                                  longitude:
+                                                      pageState.longitude,
+                                                  latitude: pageState.latitude,
+                                                  idWisata: pageState.idWisata,
+                                                  image: pageState.image,
+                                                  name: pageState.name,
+                                                  lokasi: pageState.location,
+                                                  deskripsi:
+                                                      pageState.deskripsi,
+                                                  price: pageState.price,
+                                                  rate: pageState.rate,
+                                                )
+                                              : const SplashScreenPageGlobal(),
     );
   }
 }

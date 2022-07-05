@@ -22,6 +22,9 @@ class _MyTicketPageState extends State<MyTicketPage> {
   int jumlahTiket = 0;
   int totalBayar = 0;
   String tanggalPesanan = '';
+  Uint8List convertBase64Image(String base64String) {
+    return const Base64Decoder().convert(base64String.split(',').last);
+  }
 
   Future pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -96,13 +99,12 @@ class _MyTicketPageState extends State<MyTicketPage> {
           ),
           width: double.infinity,
           height: 320,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: const DecorationImage(
-              image: AssetImage(
-                "assets/images/image_destination1.png",
-              ),
-              fit: BoxFit.cover,
+          child: SizedBox(
+            width: 180,
+            height: 200,
+            child: Image.memory(
+              convertBase64Image(image),
+              gaplessPlayback: true,
             ),
           ),
         ),
@@ -569,23 +571,23 @@ class _MyTicketPageState extends State<MyTicketPage> {
                             // print("date " + tanggalPesanan);
                             Codec<String, String> stringToBase64Url =
                                 utf8.fuse(base64Url);
-                            String encoded = stringToBase64Url.encode(fileName);
-                            print(encoded);
-                            // context
-                            //     .read<UpdateTransaksiCubit>()
-                            //     .updateTransaction(
-                            //       widget.id,
-                            //       1,
-                            //       idWisata,
-                            //       name!,
-                            //       email!,
-                            //       "085332",
-                            //       2,
-                            //       jumlahTiket,
-                            //       totalBayar,
-                            //       fileName,
-                            //       tanggalPesanan,
-                            //     );
+                            String dataFile = stringToBase64Url.encode(fileName);
+                            print(dataFile);
+                            context
+                                .read<UpdateTransaksiCubit>()
+                                .updateTransaction(
+                                  widget.id,
+                                  1,
+                                  idWisata,
+                                  name!,
+                                  email!,
+                                  "085332",
+                                  2,
+                                  jumlahTiket,
+                                  totalBayar,
+                                  dataFile,
+                                  tanggalPesanan,
+                                );
                           },
                         );
                       },
@@ -619,7 +621,7 @@ class _MyTicketPageState extends State<MyTicketPage> {
                   return Column(
                     children: [
                       header(
-                        state.result.buktiBayar,
+                        state.result.wisataImage,
                         state.result.wisataName,
                       ),
                       content(

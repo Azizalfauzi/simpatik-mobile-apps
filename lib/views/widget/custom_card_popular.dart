@@ -1,6 +1,8 @@
 part of 'widget.dart';
 
 class CustomCardPopular extends StatelessWidget {
+  final String longitude;
+  final String latitude;
   final int idWisata;
   final String image;
   final String name;
@@ -10,6 +12,8 @@ class CustomCardPopular extends StatelessWidget {
   final double rating;
   const CustomCardPopular({
     Key? key,
+    required this.longitude,
+    required this.latitude,
     required this.idWisata,
     required this.image,
     required this.name,
@@ -28,8 +32,10 @@ class CustomCardPopular extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.read<RoutesCubit>().emit(RoutesDetailScreen(
+              longitude,
+              latitude,
               idWisata,
-              "https://firebasestorage.googleapis.com/v0/b/smaga-apps.appspot.com/o/image_destination2.png?alt=media&token=34ee2eb1-7f58-4cda-aebc-3c6cfaf97b0c",
+              image,
               name,
               location,
               dekripsi,
@@ -39,7 +45,7 @@ class CustomCardPopular extends StatelessWidget {
       },
       child: Container(
         width: 200,
-        height: 320,
+        height: 380,
         margin: const EdgeInsets.only(
           left: defaultMargin,
         ),
